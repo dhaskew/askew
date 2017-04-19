@@ -1,6 +1,8 @@
+#!/usr/bin/env ruby
 
 require 'todo-txt'
 
-list = Todo::List.new "/home/dhaskew/Dropbox/todo/todo.txt"
+#list = Todo::List.new "/home/dhaskew/Dropbox/todo/todo.txt"
+list = Todo::List.new "/Users/daskew/Dropbox/todo/todo.txt"
 
 puts list.by_priority "A"
