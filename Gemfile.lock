@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    todo-txt (0.11)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  todo-txt
+
+BUNDLED WITH
+   1.14.6
