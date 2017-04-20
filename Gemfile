@@ -1,3 +1,8 @@
 source 'https://rubygems.org'
+
+#runtime dependencies
 gem 'todo-txt'
-#gem 'rack', '~> 2.0.1'
+
+#development dependencies
+gem 'pry'
+
