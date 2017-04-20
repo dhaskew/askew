@@ -1,8 +1,15 @@
 #!/usr/bin/env ruby
 
 require 'todo-txt'
+require 'pry'
+
+#binding.pry
+
+puts "No definition found for ASKEW_TODO_LOCATION" if !ENV["ASKEW_TODO_LOCATION"]
+
+list = Todo::List.new ENV["ASKEW_TODO_LOCATION"]
 
 #list = Todo::List.new "/home/dhaskew/Dropbox/todo/todo.txt"
-list = Todo::List.new "/Users/daskew/Dropbox/todo/todo.txt"
+#list = Todo::List.new "/Users/daskew/Dropbox/todo/todo.txt"
 
 puts list.by_priority "A"
