@@ -5,10 +5,14 @@ require 'todo-txt'
 require 'pry'
 
 require_relative 'config.rb'
+require_relative 'lib/string.rb'
 
 config_file = ENV['HOME'] + "/.askew/askew.config"
 
 config = Config.new "Foobar"
+
+puts "Color should be red".red
+puts "Non bold" + " text should be bold".bold + " Non Bold again."
 
 begin
   config = YAML.load(File.open(config_file))
