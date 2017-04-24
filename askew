@@ -5,7 +5,7 @@ require 'todo-txt'
 require 'pry'
 require 'thor'
 
-require_relative 'config.rb'
+require_relative 'lib/config.rb'
 require_relative 'lib/string.rb'
 
 config_file = ENV['HOME'] + "/.askew/askew.config"
