@@ -3,16 +3,61 @@
 require 'yaml'
 require 'todo-txt'
 require 'pry'
+require 'thor'
 
 require_relative 'config.rb'
 require_relative 'lib/string.rb'
+
+class List < Thor
+  
+  desc "all", "List all tasks"
+  def all
+    begin
+      puts "No definition found for ASKEW_TODO_LOCATION" if !ENV["ASKEW_TODO_LOCATION"]
+      list = Todo::List.new ENV["ASKEW_TODO_LOCATION"]
+      #puts list.by_priority "A"
+      #binding.pry
+      #puts list.sort_by { |task| task.priority }
+      puts list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end
+    rescue
+      puts "Unable to load your todo list."
+    end
+  end
+  
+  default_task :all
+
+end
+
+class Askew < Thor
+
+  desc "hello NAME", "Say hello to NAME"
+  def hello(name)
+    puts "Hello #{name}"
+  end
+
+  desc "colortest", "Print pretty colors to the screen"
+  def colortest
+    puts "Color should be red".red
+    puts "Non bold" + " text should be bold".bold + " Non Bold again."
+  end
+
+  desc "list", "List all the tasks"
+  subcommand "list", List 
+
+  default_task :list 
+end
+
+Askew.start(ARGV)
+
+
+exit
+
+#### move everything below into the objec heirachy above or refactor accordingly
 
 config_file = ENV['HOME'] + "/.askew/askew.config"
 
 config = Config.new "Foobar"
 
-puts "Color should be red".red
-puts "Non bold" + " text should be bold".bold + " Non Bold again."
 
 begin
   config = YAML.load(File.open(config_file))
@@ -36,16 +81,4 @@ rescue Exception => e
 end
 
 
-begin
-  puts "No definition found for ASKEW_TODO_LOCATION" if !ENV["ASKEW_TODO_LOCATION"]
-  list = Todo::List.new ENV["ASKEW_TODO_LOCATION"]
-  #puts list.by_priority "A"
-  #binding.pry
-  #puts list.sort_by { |task| task.priority }
-  puts list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end
-rescue
-  puts "Unable to load your todo list."
-end
-#list = Todo::List.new "/home/dhaskew/Dropbox/todo/todo.txt"
-#list = Todo::List.new "/Users/daskew/Dropbox/todo/todo.txt"
 
