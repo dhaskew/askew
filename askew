@@ -8,6 +8,17 @@ require 'thor'
 require_relative 'config.rb'
 require_relative 'lib/string.rb'
 
+config_file = ENV['HOME'] + "/.askew/askew.config"
+
+config = Config.new config_file 
+
+if !config.valid?
+  exit 1
+else
+  #puts "Loading config from #{config.path}"
+  # should we not ask the user if they would like us to create one for them on first run?
+end
+
 class List < Thor
   
   desc "all", "List all tasks"
@@ -49,36 +60,5 @@ end
 
 Askew.start(ARGV)
 
-
-exit
-
-#### move everything below into the objec heirachy above or refactor accordingly
-
-config_file = ENV['HOME'] + "/.askew/askew.config"
-
-config = Config.new "Foobar"
-
-
-begin
-  config = YAML.load(File.open(config_file))
-
-  if config.include? 'user'
-    name = config['user']['name'] if config['user'].include? 'name'
-  end
-
-  if config.include? 'data'
-    base_dir = config['data']['todo_base_dir'] if config['data'].include? 'todo_base_dir'
-    if base_dir 
-      todo_file2 = base_dir + config['data']['todo_file'] if config['data'].include? 'todo_file'
-    end
-  end
-
-rescue ArgumentError => e
-  puts "Could not parse YAML: #{e.message}"
-rescue Exception => e
-  puts "Unable to load config from: #{config_file}" 
-  puts "Exception : #{e.message}"
-end
-
-
+exit 0
 
