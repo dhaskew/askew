@@ -5,27 +5,16 @@ require 'todo-txt'
 require 'pry'
 require 'thor'
 
+require_relative 'lib/startup.rb'
 require_relative 'lib/config.rb'
 require_relative 'lib/string.rb'
-
-config_file = ENV['HOME'] + "/.askew/askew.config"
-
-config = Config.new config_file 
-
-if !config.valid?
-  exit 1
-else
-  #puts "Loading config from #{config.path}"
-  # should we not ask the user if they would like us to create one for them on first run?
-end
 
 class List < Thor
   
   desc "all", "List all tasks"
   def all
     begin
-      puts "No definition found for ASKEW_TODO_LOCATION" if !ENV["ASKEW_TODO_LOCATION"]
-      list = Todo::List.new ENV["ASKEW_TODO_LOCATION"]
+      list = Todo::List.new Startup.config.todo_file
       #puts list.by_priority "A"
       #binding.pry
       #puts list.sort_by { |task| task.priority }
@@ -58,7 +47,8 @@ class Askew < Thor
   default_task :list 
 end
 
+# Start the program
+Startup.process_config
 Askew.start(ARGV)
-
 exit 0
 
