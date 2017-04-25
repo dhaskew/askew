@@ -1,10 +1,5 @@
 
-This should say something useful.
-
-What:
-
-Why:
-
-Who:
-
-How:
+* Clone Repo
+* gem install bundler
+* bundle install
+* ./askew help
