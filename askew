@@ -30,6 +30,15 @@ end
 
 class Askew < Thor
 
+  @@version = "0.0.1"
+
+  map %w[--version -v] => :_print_version
+
+  desc "--version, -v", "print the version"
+  def _print_version
+    puts @@version 
+  end
+
   desc "hello NAME", "Say hello to NAME"
   def hello(name)
     puts "Hello #{name}"
