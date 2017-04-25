@@ -1,8 +1,8 @@
 class Startup
 
-  def self.process_config
+  def self.process_config optional_config=nil
 
-    @@config_file = ENV['HOME'] + "/.askew/askew.config"
+    @@config_file = optional_config != nil ? optional_config : ENV['HOME'] + "/.askew/askew.config"
 
     @@config = Config.new config_file 
 

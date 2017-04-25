@@ -9,6 +9,12 @@ require_relative 'lib/startup.rb'
 require_relative 'lib/config.rb'
 require_relative 'lib/string.rb'
 
+VERSION_MAJOR    = '0'
+VERSION_MINOR    = '0'
+VERSION_PATCH    = '1'
+
+VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." +VERSION_PATCH
+
 class List < Thor
   
   desc "all", "List all tasks"
@@ -28,16 +34,45 @@ class List < Thor
 
 end
 
-class Askew < Thor
+class Version < Thor
+
+  desc "all", "Print all the components of the application version"
+  def all 
+    puts VERSION 
+  end
+
+  desc "major", "Print only the major version of the application version"
+  def major
+    puts VERSION_MAJOR
+  end
+  
+  desc "minor", "Print only the minor version of the application version"
+  def minor
+    puts VERSION_MINOR
+  end
+  
+  desc "patch", "Print only the patch version of the application version"
+  def patch
+    puts VERSION_PATCH
+  end
+  
+  default_task :all
+end
+
+class CLI < Thor
 
   @@version = "0.0.1"
+  
+  class_option 'config', :aliases => '-c', :type => :string, :default => nil 
 
-  map %w[--version -v] => :_print_version
+  #desc "version", "print the application version"
+  #remove_class_option 'config'
+  #def version
+  #  puts @@version 
+  #end
 
-  desc "--version, -v", "print the version"
-  def _print_version
-    puts @@version 
-  end
+  desc "version" ,  "Display the application version"
+  subcommand "version", Version
 
   desc "hello NAME", "Say hello to NAME"
   def hello(name)
@@ -54,10 +89,22 @@ class Askew < Thor
   subcommand "list", List 
 
   default_task :list 
+
+  def initialize(*args)
+    super
+    #puts args
+    Startup.process_config options[:config]
+  end
+
+  no_commands do
+    def _get_config_arg
+      options[:config]
+    end
+  end 
+
 end
 
 # Start the program
-Startup.process_config
-Askew.start(ARGV)
+CLI.start(ARGV)
 exit 0
 
