@@ -13,7 +13,15 @@ module Askew
         puts "Unable to load your todo list."
       end
     end
-    
+
+    desc "add TASK_INFO", "Add a task"
+    def add *task_text
+      new_task = Todo::Task.new task_text.join ' '
+      list = Todo::List.new Startup.config.todo_file
+      list << new_task
+      list.save! #"#{Startup.config.todo_file}2)"
+    end
+
     default_task :list
 
   end
