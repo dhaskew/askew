@@ -63,7 +63,7 @@ class CLI < Thor
 
   @@version = "0.0.1"
   
-  class_option 'config', :aliases => '-c', :type => :string, :default => nil 
+  class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil 
 
   #desc "version", "print the application version"
   #remove_class_option 'config'
