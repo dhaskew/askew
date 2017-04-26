@@ -8,6 +8,7 @@ require 'thor'
 require_relative 'lib/startup.rb'
 require_relative 'lib/config.rb'
 require_relative 'lib/string.rb'
+require_relative 'lib/commands/version.rb'
 
 VERSION_MAJOR    = '0'
 VERSION_MINOR    = '0'
@@ -15,14 +16,14 @@ VERSION_PATCH    = '1'
 
 VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." +VERSION_PATCH
 
-class List < Thor
+module Askew
+class Task < Thor
   
   desc "all", "List all tasks"
   def all
     begin
       list = Todo::List.new Startup.config.todo_file
       #puts list.by_priority "A"
-      #binding.pry
       #puts list.sort_by { |task| task.priority }
       puts list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end
     rescue
@@ -33,30 +34,6 @@ class List < Thor
   default_task :all
 
 end
-
-class Version < Thor
-
-  desc "all", "Print all the components of the application version"
-  def all 
-    puts VERSION 
-  end
-
-  desc "major", "Print only the major version of the application version"
-  def major
-    puts VERSION_MAJOR
-  end
-  
-  desc "minor", "Print only the minor version of the application version"
-  def minor
-    puts VERSION_MINOR
-  end
-  
-  desc "patch", "Print only the patch version of the application version"
-  def patch
-    puts VERSION_PATCH
-  end
-  
-  default_task :all
 end
 
 class CLI < Thor
@@ -64,12 +41,6 @@ class CLI < Thor
   @@version = "0.0.1"
   
   class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil 
-
-  #desc "version", "print the application version"
-  #remove_class_option 'config'
-  #def version
-  #  puts @@version 
-  #end
 
   desc "version" ,  "Display the application version"
   subcommand "version", Version
@@ -85,14 +56,13 @@ class CLI < Thor
     puts "Non bold" + " text should be bold".bold + " Non Bold again."
   end
 
-  desc "list", "List all the tasks"
-  subcommand "list", List 
+  desc "task", "List all the tasks"
+  subcommand "task", Askew::Task
 
-  default_task :list 
+  default_task :task 
 
   def initialize(*args)
     super
-    #puts args
     Startup.process_config options[:config]
   end
 
