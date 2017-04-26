@@ -9,32 +9,13 @@ require_relative 'lib/startup.rb'
 require_relative 'lib/config.rb'
 require_relative 'lib/string.rb'
 require_relative 'lib/commands/version.rb'
+require_relative 'lib/commands/task.rb'
 
 VERSION_MAJOR    = '0'
 VERSION_MINOR    = '0'
 VERSION_PATCH    = '1'
 
-VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." +VERSION_PATCH
-
-module Askew
-class Task < Thor
-  
-  desc "all", "List all tasks"
-  def all
-    begin
-      list = Todo::List.new Startup.config.todo_file
-      #puts list.by_priority "A"
-      #puts list.sort_by { |task| task.priority }
-      puts list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end
-    rescue
-      puts "Unable to load your todo list."
-    end
-  end
-  
-  default_task :all
-
-end
-end
+VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." + VERSION_PATCH
 
 class CLI < Thor
 
@@ -44,11 +25,6 @@ class CLI < Thor
 
   desc "version" ,  "Display the application version"
   subcommand "version", Version
-
-  desc "hello NAME", "Say hello to NAME"
-  def hello(name)
-    puts "Hello #{name}"
-  end
 
   desc "colortest", "Print pretty colors to the screen"
   def colortest
