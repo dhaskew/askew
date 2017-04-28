@@ -3,7 +3,7 @@ require_relative "test_helper.rb"
 
 class AskewTest < Minitest::Test
 
-  def steup
+  def setup
     puts "test"
   end
 
