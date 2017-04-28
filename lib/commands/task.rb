@@ -9,11 +9,10 @@ module Askew
         #puts list.by_priority "A"
         #puts list.sort_by { |task| task.priority }
         sorted = list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end
-        sorted.each.with_index do |task,index|
-          puts "#{index+1} #{task}" 
-        end
-      rescue
+        print sorted
+      rescue Exception => e
         puts "Unable to load your todo list."
+        puts e
       end
     end
 
@@ -32,11 +31,21 @@ module Askew
 
       index_to_rm = num.to_i - 1 
       if yes? "[y,yes] Ok to remove task #{num}? : #{sorted[index_to_rm]} \n" 
-        puts "user confirmed"
         list.delete sorted[index_to_rm]
         list.save! 
       end
     end
+
+    no_commands do
+      def print task_list=nil
+        return if task_list == nil
+      
+        task_list.each.with_index do |task,index|
+          puts "#{index+1} #{task}" 
+        end
+      
+      end
+    end 
 
     map rm: :remove
 
