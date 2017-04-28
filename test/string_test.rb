@@ -1,4 +1,5 @@
-require "minitest/autorun"
+#require "minitest/autorun"
+require_relative "test_helper.rb"
 
 class AskewTest < Minitest::Test
 
