@@ -11,46 +11,49 @@ require_relative 'lib/string.rb'
 require_relative 'lib/commands/version.rb'
 require_relative 'lib/commands/task.rb'
 
-VERSION_MAJOR    = '0'
-VERSION_MINOR    = '0'
-VERSION_PATCH    = '1'
+module Askew
 
-VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." + VERSION_PATCH
+  VERSION_MAJOR    = '0'
+  VERSION_MINOR    = '0'
+  VERSION_PATCH    = '1'
 
-class CLI < Thor
+  VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." + VERSION_PATCH
 
-  @@version = "0.0.1"
-  
-  class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil 
+  class CLI < Thor
 
-  desc "version" ,  "Display the application version"
-  subcommand "version", Version
+    @@version = "0.0.1"
+    
+    class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil 
 
-  desc "colortest", "Print pretty colors to the screen"
-  def colortest
-    puts "Color should be red".red
-    puts "Non bold" + " text should be bold".bold + " Non Bold again."
-  end
+    desc "version" ,  "Display the application version"
+    subcommand "version", Version
 
-  desc "task", "List all the tasks"
-  subcommand "task", Askew::Task
-
-  default_task :task 
-
-  def initialize(*args)
-    super
-    Startup.process_config options[:config]
-  end
-
-  no_commands do
-    def _get_config_arg
-      options[:config]
+    desc "colortest", "Print pretty colors to the screen"
+    def colortest
+      puts "Color should be red".red
+      puts "Non bold" + " text should be bold".bold + " Non Bold again."
     end
-  end 
+
+    desc "task", "List all the tasks"
+    subcommand "task", Askew::Task
+
+    default_task :task 
+
+    def initialize(*args)
+      super
+      Startup.process_config options[:config]
+    end
+
+    no_commands do
+      def _get_config_arg
+        options[:config]
+      end
+    end 
+
+  end
+
+  # Start the program
+  CLI.start(ARGV)
+  exit 0
 
 end
-
-# Start the program
-CLI.start(ARGV)
-exit 0
-
