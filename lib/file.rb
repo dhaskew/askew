@@ -4,7 +4,7 @@ module Askew
 
     def self.open(path, mode = 'r')
       ios = new(path, mode)
-
+      
       if block_given?
         yield ios
         return ios.close
@@ -41,7 +41,7 @@ module Askew
       return enum_for(:each) unless block_given?
 
       @ios.each_line do |line|
-        yield Task.new(line)
+        yield Askew::Task.new(line)
       end
     end
 

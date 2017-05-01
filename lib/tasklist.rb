@@ -1,23 +1,9 @@
 module Askew
   class TaskList < Array
     def initialize(list)
-      case list
-      when Array
-        tasks = list.map do |item|
-          case item
-          when String then Task.new(item)
-          when Task then item
-          else
-            raise "Cannot add #{item.class} to list."
-          end
-        end
-
-        concat(tasks)
-
-      when String
-        @path = list
-        concat(File.read(list))
-      end
+      puts list
+      @path = list
+      concat(Askew::File.read(list))
     end
 
     attr_reader :path
@@ -45,7 +31,7 @@ module Askew
     def save!
       raise "No path specified." unless path
 
-      File.write(path, self)
+      Askew::File.write(path, self)
     end
   end
 end

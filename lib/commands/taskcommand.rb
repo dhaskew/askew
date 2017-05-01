@@ -1,6 +1,6 @@
 module Askew
   
-  class Task < Thor
+  class TaskCommand < Thor
     
     desc "list", "List all tasks"
     def list 
@@ -44,7 +44,7 @@ module Askew
 
     desc "add TASK_INFO", "Add a task"
     def add *task_text
-      new_task = Todo::Task.new task_text.join ' '
+      new_task = Askew::Task.new task_text.join ' '
       list = get_list 
       list << new_task
       list.save! #"#{Startup.config.todo_file}2)"
@@ -69,7 +69,7 @@ module Askew
       end 
 
       def get_list
-        list = Todo::List.new Startup.config.todo_file
+        list = Askew::TaskList.new Startup.config.todo_file
       end
 
       def print task_list=nil

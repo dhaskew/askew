@@ -14,7 +14,7 @@ require_relative 'lib/file.rb'
 require_relative 'lib/options.rb'
 require_relative 'lib/tasklist.rb'
 require_relative 'lib/commands/version.rb'
-require_relative 'lib/commands/task.rb'
+require_relative 'lib/commands/taskcommand.rb'
 
 module Askew
 
@@ -40,7 +40,7 @@ module Askew
     end
 
     desc "task", "List all the tasks"
-    subcommand "task", Askew::Task
+    subcommand "task", Askew::TaskCommand
 
     default_task :task 
 

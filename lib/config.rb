@@ -11,7 +11,7 @@ module Askew
       @path = path
       @valid = false
       begin
-        config = YAML.load(File.open(path))
+        config = YAML.load(::File.open(path))
         if config.include? 'user'
           name = config['user']['name'] if config['user'].include? 'name'
         end

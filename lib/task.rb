@@ -1,5 +1,5 @@
 require 'date'
-require_relative 'pattenhelpers.rb'
+#require_relative './pattenhelpers.rb'
 
 module Askew
 
@@ -7,7 +7,7 @@ module Askew
     include Comparable
     include Askew::PatternHelpers
 
-    def initialize(line, options=Todo.options)
+    def initialize(line, options=Askew::Options.new)
       @raw = line
       @priority = extract_priority(raw)
       @created_on = extract_created_on(raw)
