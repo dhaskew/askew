@@ -1,0 +1,146 @@
+require 'date'
+require_relative 'pattenhelpers.rb'
+
+module Askew
+
+  class Task
+    include Comparable
+    include Askew::PatternHelpers
+
+    def initialize(line, options=Todo.options)
+      @raw = line
+      @priority = extract_priority(raw)
+      @created_on = extract_created_on(raw)
+      @tags = extract_tags(raw)
+      @contexts ||= extract_contexts(raw)
+      @projects ||= extract_projects(raw)
+
+      if options.require_completed_on
+        @completed_on = extract_completed_date(raw)
+        @is_completed = !@completed_on.nil?
+      else
+        @completed_on = extract_completed_date(raw)
+        @is_completed = check_completed_flag(raw)
+      end
+    end
+
+    attr_reader :raw
+
+    attr_reader :created_on
+
+    attr_reader :completed_on
+
+    attr_reader :tags
+
+    attr_reader :priority
+    
+    attr_reader :contexts
+
+    attr_reader :projects
+
+    def text
+      @text ||= extract_item_text(raw)
+    end
+
+    def due_on
+      begin
+        Date.parse(tags[:due]) if tags[:due] =~ /(\d{4}-\d{2}-\d{2})/
+      rescue ArgumentError
+        return nil
+      end
+    end
+
+    def overdue?
+      !due_on.nil? && due_on < Date.today
+    end
+
+    def done?
+      @is_completed
+    end
+
+    def do!
+      @completed_on = Date.today
+      @is_completed = true
+      @priority = nil
+    end
+
+    def undo!
+      @completed_on = nil
+      @is_completed = false
+      @priority = extract_priority(raw)
+    end
+
+    def priority_inc!
+      if @priority.nil?
+        @priority = 'A'
+      elsif @priority.ord > 65
+        @priority = (@priority.ord - 1).chr
+      end
+      @priority
+    end
+
+    def priority_dec!
+      return if @priority.nil?
+      @priority = @priority.next if @priority.ord < 90
+      @priority
+    end
+
+    def toggle!
+      done? ? undo! : do!
+    end
+
+    def <=>(other)
+      if priority.nil? && other.priority.nil?
+        0
+      elsif other.priority.nil?
+        1
+      elsif priority.nil?
+        -1
+      else
+        other.priority <=> priority
+      end
+    end
+
+    def to_s
+      [
+        print_done_marker,
+        print_priority,
+        created_on.to_s,
+        text,
+        print_contexts,
+        print_projects,
+        print_tags
+      ].reject { |item| !item || item.nil? || item.empty? }.join(' ')
+    end
+
+    private
+
+    def print_done_marker
+      return unless done?
+
+      if completed_on.nil?
+        COMPLETED_FLAG
+      else
+        "#{COMPLETED_FLAG} #{completed_on}"
+      end
+    end
+
+    def print_priority
+      return unless priority
+
+      "(#{priority})"
+    end
+
+    def print_contexts
+      contexts.join(' ')
+    end
+
+    def print_projects
+      projects.join(' ')
+    end
+
+    def print_tags
+      tags.map { |tag, val| "#{tag}:#{val}" }.join(' ')
+    end
+  end
+end

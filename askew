@@ -1,13 +1,18 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
-require 'todo-txt'
+#require 'todo-txt'
 require 'pry'
 require 'thor'
 
 require_relative 'lib/startup.rb'
 require_relative 'lib/config.rb'
 require_relative 'lib/string.rb'
+require_relative 'lib/patternhelpers.rb'
+require_relative 'lib/task.rb'
+require_relative 'lib/file.rb'
+require_relative 'lib/options.rb'
+require_relative 'lib/tasklist.rb'
 require_relative 'lib/commands/version.rb'
 require_relative 'lib/commands/task.rb'
 
