@@ -1,9 +1,13 @@
 module Askew
-  class TaskList < Array
+  class TaskList < Hash #Array
     def initialize(list)
-      puts list
       @path = list
-      concat(Askew::File.read(list))
+      temp = Askew::File.read(list)
+      counter = 1 
+      temp.each do |task|
+        self[counter] = task
+        counter += 1
+      end 
     end
 
     attr_reader :path

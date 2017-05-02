@@ -64,8 +64,8 @@ module Askew
     no_commands do
      
       def get_sorted_list
-        list = get_list 
-        sorted = list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end
+        list = get_list#.by_not_done
+        sorted = list.sort_by {|key, value| [value.priority ? 0 : 1, value.priority || 0]} # list by priorty with nulls at the end
       end 
 
       def get_list
@@ -75,8 +75,8 @@ module Askew
       def print task_list=nil
         return if task_list == nil
       
-        task_list.each.with_index do |task,index|
-          puts "#{index+1} #{task}" 
+        task_list.each do |key,value|
+          puts "#{key} #{value.raw}" 
         end
       
       end
