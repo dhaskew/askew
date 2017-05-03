@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
-#require 'todo-txt'
 require 'pry'
 require 'thor'
 

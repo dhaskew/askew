@@ -65,7 +65,7 @@ module Askew
     no_commands do
      
       def get_sorted_list
-        list = get_list#.by_not_done
+        list = get_list
         sorted = list.sort_by {|key, value| [value.priority ? 0 : 1, value.priority || 0]} # list by priorty with nulls at the end
       end 
 
