@@ -35,7 +35,7 @@ module Askew
     def save!
       raise "No path specified." unless path
 
-      Askew::File.write(path, self)
+      Askew::File.write(path, self.values)
     end
   end
 end

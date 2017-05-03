@@ -45,9 +45,9 @@ module Askew
     desc "add TASK_INFO", "Add a task"
     def add *task_text
       new_task = Askew::Task.new task_text.join ' '
-      list = get_list 
-      list << new_task
-      list.save! #"#{Startup.config.todo_file}2)"
+      list = get_list
+      list[list.count + 1] = new_task
+      list.save!
     end
 
     desc "remove | rm TASK_#", "Remove a task"
