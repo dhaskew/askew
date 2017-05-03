@@ -50,13 +50,14 @@ module Askew
       list.save!
     end
 
+    map rm: :remove
+    
     desc "remove | rm TASK_#", "Remove a task"
     def remove num
-      sorted = get_sorted_list 
-
-      index_to_rm = num.to_i - 1 
-      if yes? "[y,yes] Ok to remove task #{num}? : #{sorted[index_to_rm]} \n" 
-        list.delete sorted[index_to_rm]
+      list = get_list 
+      index_to_rm = num.to_i
+      if yes? "[y,yes] Ok to remove task #{num}? : #{list[index_to_rm].raw}" 
+        list.delete(index_to_rm)
         list.save! 
       end
     end
@@ -82,8 +83,6 @@ module Askew
       end
 
     end 
-
-    map rm: :remove
 
     default_task :list
 
