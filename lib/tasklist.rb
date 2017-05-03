@@ -34,8 +34,13 @@ module Askew
 
     def save!
       raise "No path specified." unless path
-
+      
+      self.backup
       Askew::File.write(path, self.values)
+    end
+
+    def backup
+      ::FileUtils::copy_file(@path,@path + ".bak")
     end
   end
 end
