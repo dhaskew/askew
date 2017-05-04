@@ -96,9 +96,15 @@ module Askew
 
       def print task_list=nil
         return if task_list == nil
-      
+        
+        ids = []
+        #collect only the line #'s
+        task_list.flatten.each_with_index {|item,index| ids << item if index.even?} 
+        #find the char count of the biggest line # 
+        max = ids.max.to_s.size
+        
         task_list.each do |key,value|
-          puts "#{key} #{value.raw}" 
+          puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
         end
       
       end
