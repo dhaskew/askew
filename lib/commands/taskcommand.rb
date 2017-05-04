@@ -62,8 +62,29 @@ module Askew
       end
     end
 
+    desc "show TASK_#", "Show all the details of a task"
+    def show num
+      show_task num 
+    end
+
     no_commands do
-     
+    
+      def show_task num
+        list = get_list
+        task = list[num.to_i]
+        puts ""        
+        puts "Poperty            Value"
+        puts "----------------------------------------------------"
+        puts "ID                 #{num}" 
+        puts "Priority           #{task.priority}"
+        puts "Text               #{task.text}"
+        puts "Projects           #{task.projects}"
+        puts "Contexts           #{task.contexts}"
+        puts "Tags               #{task.tags}"
+        puts "Raw                #{task.raw}"
+        puts ""
+      end
+
       def get_sorted_list
         list = get_list
         sorted = list.sort_by {|key, value| [value.priority ? 0 : 1, value.priority || 0]} # list by priorty with nulls at the end
