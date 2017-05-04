@@ -5,6 +5,7 @@ gem 'thor'
 
 #development dependencies
 gem 'pry'
+gem 'pry-doc'
 
 #testing dependencies
 gem 'minitest-reporters'
