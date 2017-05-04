@@ -76,11 +76,11 @@ module Askew
         puts "Poperty            Value"
         puts "----------------------------------------------------"
         puts "ID                 #{num}" 
-        puts "Priority           #{task.priority}"
+        puts "Priority           #{task.priority}" if task.priority
         puts "Text               #{task.text}"
-        puts "Projects           #{task.projects}"
-        puts "Contexts           #{task.contexts}"
-        puts "Tags               #{task.tags}"
+        puts "Projects           #{task.projects.join " , " }" if task.projects.any?
+        puts "Contexts           #{task.contexts.join " , "}" if task.contexts.any?
+        puts "Tags               #{task.tags.map{|k,v| "#{k}:#{v}"}.join(' , ')}" if task.tags.any?
         puts "Raw                #{task.raw}"
         puts ""
       end
