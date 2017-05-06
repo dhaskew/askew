@@ -1,14 +1,13 @@
-#require "minitest/autorun"
 require_relative "../test_helper.rb"
 
-class AskewTest < Minitest::Test
+class StringTest < Minitest::Test
 
   def setup
-  
+    @string_test = "test" 
   end
 
-  def test_to_be_skipped
-    skip "skipping this test"
+  def test_string_apply_color_handles_nil
+    assert @string_test.apply_color(nil) != nil
   end
 
 end

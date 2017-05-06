@@ -5,8 +5,10 @@ SimpleCov.start do
 end
 
 require "minitest/reporters"
-Minitest::Reporters.use!
+#Minitest::Reporters.use! [Minitest::Reporters::ProgressReporter.new(:color => true), Minitest::Reporters::SpecReporter.new()]
+Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new()]
 require "minitest/autorun"
 require "thor"
+require "pry"
 Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
 

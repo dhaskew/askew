@@ -1,7 +1,7 @@
 
 module Askew
 
-  class String
+  class ::String
     # colorization
     def apply_color(ascii_color_code)
       "\e[#{ascii_color_code}m#{self}\e[0m"
