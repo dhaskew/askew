@@ -20,18 +20,16 @@ module Askew
 
     desc "do TASK_#", "Mark TASK_# as done."
     def do task_num 
-      sorted = get_sorted_list
-      raw = sorted[task_num.to_i-1].raw
       list = get_list
-      list.each do |task|
-        task.do! if task.raw == raw #this could complete more than one item if they are exactly the same
-        puts "Item #{task_num} has been completed: #{sorted[task_num.to_i-1].raw}" if task.raw == raw
-      end
+      list[task_num.to_i].do!
+      puts "Item #{task_num} has been completed: #{list[task_num.to_i].raw}"
       list.save!
     end
 
     desc "undo TASK_X", "Mark TASK_# as not done"
     def undo task_num
+      puts "Check before using ..."
+      return
       sorted = get_sorted_list
       raw = sorted[task_num.to_i-1].raw
       list = get_list
@@ -81,6 +79,8 @@ module Askew
         puts "Projects           #{task.projects.join " , " }" if task.projects.any?
         puts "Contexts           #{task.contexts.join " , "}" if task.contexts.any?
         puts "Tags               #{task.tags.map{|k,v| "#{k}:#{v}"}.join(' , ')}" if task.tags.any?
+        puts "Created            #{task.created_on}" if task.created_on 
+        puts "Completed          #{task.completed_on}" if task.completed_on 
         puts "Raw                #{task.raw}"
         puts ""
       end

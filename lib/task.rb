@@ -10,7 +10,11 @@ module Askew
     def initialize(line, options=Askew::Options.new)
       @raw = line
       @priority = extract_priority(raw)
-      @created_on = extract_created_on(raw)
+
+      created = extract_created_on(raw)
+      today = "#{DateTime.now.year}-#{DateTime.now.month.to_s.rjust(2,'0')}-#{DateTime.now.day.to_s.rjust(2,'0')}"
+
+      @created_on = created.nil? ? today : created
       @tags = extract_tags(raw)
       @contexts ||= extract_contexts(raw)
       @projects ||= extract_projects(raw)
