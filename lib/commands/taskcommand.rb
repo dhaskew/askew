@@ -28,15 +28,9 @@ module Askew
 
     desc "undo TASK_X", "Mark TASK_# as not done"
     def undo task_num
-      puts "Check before using ..."
-      return
-      sorted = get_sorted_list
-      raw = sorted[task_num.to_i-1].raw
       list = get_list
-      list.each do |task|
-        task.undo! if task.raw == raw #this could qualify duplicates
-        puts "Item #{task_num} has been marked incomplete #{sorted[task_num.to_i-1].raw}" if task.raw == raw
-      end
+      list[task_num.to_i].undo! 
+      puts "Item #{task_num} has been marked incomplete #{list[task_num.to_i].raw}"
       list.save!
     end
 
