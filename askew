@@ -4,45 +4,8 @@ require 'yaml'
 require 'pry'
 require 'thor'
 
-Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
+require_relative 'lib/cli.rb'
 
-module Askew
-
-  class CLI < Thor
-
-    @@version = "0.0.1"
-    
-    class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil 
-
-    desc "version" ,  "Display the application version"
-    subcommand "version", Askew::VersionCommand
-
-    desc "colortest", "Print pretty colors to the screen"
-    def colortest
-      puts "Color should be red".red
-      puts "Non bold" + " text should be bold".bold + " Non Bold again."
-    end
-
-    desc "task", "List all the tasks"
-    subcommand "task", Askew::TaskCommand
-
-    default_task :task 
-
-    def initialize(*args)
-      super
-      Startup.process_config options[:config]
-    end
-
-    no_commands do
-      def _get_config_arg
-        options[:config]
-      end
-    end 
-
-  end
-
-  # Start the program
-  CLI.start(ARGV)
-  exit 0
-
-end
+# Start the program
+Askew::CLI.start(ARGV)
+exit 0
