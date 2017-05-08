@@ -29,6 +29,12 @@ module Askew
     desc "undo TASK_X", "Mark TASK_# as not done"
     def undo task_num
       list = get_list
+
+      if !list[task_num.to_i].done?
+        puts "Item #{task_num} is not yet completed. No change made."
+        return
+      end
+
       list[task_num.to_i].undo! 
       puts "Item #{task_num} has been marked incomplete #{list[task_num.to_i].raw}"
       list.save!
