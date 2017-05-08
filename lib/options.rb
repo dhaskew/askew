@@ -7,9 +7,6 @@ module Askew
     # - When `false`, tasks starting with `x ` are considered done.
     attr_accessor :require_completed_on
 
-    # Whether or not to preserve original field order for roundtripping.
-    attr_accessor :maintain_field_order
-
     def initialize
       reset
     end
@@ -17,7 +14,6 @@ module Askew
     # Reset to defaults.
     def reset
       @require_completed_on = true
-      @maintain_field_order = false
     end
   end
 end
