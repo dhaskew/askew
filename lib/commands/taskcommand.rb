@@ -1,7 +1,7 @@
 module Askew
   
-  class TaskCommand < Thor
-    
+  class TaskCommand < CommandBase 
+
     desc "list", "List all tasks"
     def list 
       begin

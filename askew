@@ -8,12 +8,6 @@ Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
 
 module Askew
 
-  VERSION_MAJOR    = '0'
-  VERSION_MINOR    = '0'
-  VERSION_PATCH    = '1'
-
-  VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." + VERSION_PATCH
-
   class CLI < Thor
 
     @@version = "0.0.1"
@@ -21,7 +15,7 @@ module Askew
     class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil 
 
     desc "version" ,  "Display the application version"
-    subcommand "version", Version
+    subcommand "version", Askew::VersionCommand
 
     desc "colortest", "Print pretty colors to the screen"
     def colortest
