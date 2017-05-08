@@ -5,7 +5,7 @@ module Askew
     desc "list", "List all tasks"
     def list 
       begin
-        print get_sorted_list
+        print_list get_sorted_list
       rescue Exception => e
         puts "Unable to load your todo list."
         puts e
@@ -88,7 +88,7 @@ module Askew
         list = Askew::TaskList.new Startup.config.todo_file
       end
 
-      def print task_list=nil
+      def print_list task_list=nil
         return if task_list == nil
         
         ids = []
@@ -98,7 +98,11 @@ module Askew
         max = ids.max.to_s.size
         
         task_list.each do |key,value|
-          puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
+          if(value.done?)
+            print "#{key.to_s.rjust(max,' ')} #{value.raw}".red.bold
+          else
+            puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
+          end 
         end
       
       end
