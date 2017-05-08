@@ -24,12 +24,6 @@ module Askew
       Startup.process_config options[:config]
     end
 
-    no_commands do
-      def _get_config_arg
-        options[:config]
-      end
-    end 
-
   end
 
 end
