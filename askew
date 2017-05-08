@@ -1,9 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'yaml'
-require 'pry'
-require 'thor'
-
 require_relative 'lib/cli.rb'
 
 # Start the program
