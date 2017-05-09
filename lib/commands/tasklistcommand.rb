@@ -16,8 +16,8 @@ module Askew
       puts get_list.contexts.sort
     end
 
-    desc "list", "List all tasks"
-    def list 
+    desc "all", "List all tasks"
+    def all 
       begin
         print_list get_sorted_list
       rescue Exception => e
@@ -69,7 +69,7 @@ module Askew
 
     end
 
-   default_task :list 
+   default_task :all 
 
   end
 

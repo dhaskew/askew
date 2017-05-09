@@ -15,8 +15,6 @@ module Askew
       list.save!
     end
 
-
-
     desc "undo TASK_#", "Mark TASK_# as not done"
     long_desc <<-LONGDESC
       
