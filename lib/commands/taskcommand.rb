@@ -9,6 +9,9 @@
       end
     end
 
+
+require_relative 'tasklistcommand.rb'
+
 module Askew
 
   class TaskCommand < CommandBase 
