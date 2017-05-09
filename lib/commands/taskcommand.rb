@@ -1,23 +1,10 @@
 module Askew
-  
+
   class TaskCommand < CommandBase 
 
-    desc "list", "List all tasks"
-    def list 
-      begin
-        print_list get_sorted_list
-      rescue Exception => e
-        puts "Unable to load your todo list."
-        puts e
-      end
-    end
-
-    #desc "search SEARCH_PHRASE", "Search tasks for SEARCH_PHRASE"
-    #def search phrase
-    #  list = Todo::List.new Startup.config.todo_file
-    #  sorted = list.sort_by {|item| [item.priority ? 0 : 1, item.priority || 0]} # list by priorty with nulls at the end 
-    #end
-
+    desc "list", "List tasks/projects/contexts"  
+    subcommand "list", Askew::TaskListCommand
+    
     desc "do TASK_#", "Mark TASK_# as done."
     def do task_num 
       list = get_list
