@@ -1,15 +1,3 @@
-
-    class Thor
-      module Shell
-        class Basic
-          def print_wrapped(message, options = {})
-            stdout.puts message
-          end
-        end
-      end
-    end
-
-
 require_relative 'tasklistcommand.rb'
 
 module Askew
