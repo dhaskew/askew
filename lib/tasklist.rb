@@ -1,5 +1,5 @@
 module Askew
-  class TaskList < Hash #Array
+  class TaskList < Hash
     def initialize(list)
       @path = list
       temp = Askew::File.read(list)
@@ -22,6 +22,18 @@ module Askew
       contexts = []
       self.each { |key,value| contexts << value.contexts }
       contexts.flatten.uniq 
+    end
+
+    def for_project project
+      project_tasks = {}
+      self.each { |key,value| project_tasks[key] = value if value.projects.include? project }
+      project_tasks
+    end
+
+    def for_context context
+      context_tasks = {}
+      self.each { |key,value| context_tasks[key] = value if value.contexts.include? context }
+      context_tasks
     end
 
     def by_priority(priority)

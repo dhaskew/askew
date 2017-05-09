@@ -26,6 +26,17 @@ module Askew
       end
     end
 
+    desc "for_project X", "List all tasks connected to project X"
+    def for_project proj
+      print_list get_list.for_project proj
+    end
+
+    desc "for_context X", "List all tasks connected to context X"
+    def for_context con
+      print_list get_list.for_context con
+    end
+
+
     no_commands do   
       
       def get_sorted_list
