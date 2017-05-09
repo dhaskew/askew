@@ -1,3 +1,14 @@
+
+    class Thor
+      module Shell
+        class Basic
+          def print_wrapped(message, options = {})
+            stdout.puts message
+          end
+        end
+      end
+    end
+
 module Askew
 
   class TaskCommand < CommandBase 
@@ -13,7 +24,16 @@ module Askew
       list.save!
     end
 
-    desc "undo TASK_X", "Mark TASK_# as not done"
+
+
+    desc "undo TASK_#", "Mark TASK_# as not done"
+    long_desc <<-LONGDESC
+      
+      'askew task undo' will mark a task as not done and remove the completion marker(x) and or completion date as necesssary.
+       
+      Insert ARCHIVE related comments as neeeded?
+
+    LONGDESC
     def undo task_num
       list = get_list
 
