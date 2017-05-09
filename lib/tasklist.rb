@@ -12,6 +12,18 @@ module Askew
 
     attr_reader :path
 
+    def projects
+      projects = []
+      self.each { |key,value| projects << value.projects }
+      projects.flatten.uniq
+    end
+
+    def contexts
+      contexts = []
+      self.each { |key,value| contexts << value.contexts }
+      contexts.flatten.uniq 
+    end
+
     def by_priority(priority)
       TaskList.new(select { |task| task.priority == priority })
     end
