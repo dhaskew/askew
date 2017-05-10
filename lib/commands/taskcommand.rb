@@ -36,6 +36,15 @@ module Askew
       list.save!
     end
 
+    desc "pri | priority TASK_# NEW_PRIORITY", "Update TASK_# with NEW_PRIORITY"
+    def pri task_num, pri
+      list = get_list
+      list[task_num.to_i].priority = pri
+      list.save!
+    end
+
+    #map priority: :pri
+
     desc "add TASK_INFO", "Add a task"
     def add *task_text
       new_task = Askew::Task.new task_text.join ' '

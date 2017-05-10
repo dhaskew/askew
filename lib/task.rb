@@ -36,7 +36,7 @@ module Askew
 
     attr_reader :tags
 
-    attr_reader :priority
+    attr_accessor :priority
     
     attr_reader :contexts
 
