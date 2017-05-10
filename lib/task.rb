@@ -38,7 +38,7 @@ module Askew
 
     attr_accessor :priority
     
-    attr_reader :contexts
+    attr_accessor :contexts
 
     attr_reader :projects
 

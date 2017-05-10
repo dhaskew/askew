@@ -36,6 +36,13 @@ module Askew
       list.save!
     end
 
+    desc "con TASK_# NEW_CONTEXTS", "Replace existing contexts for TASK_# with NEW_CONTEXTS"
+    def con task_num, *cons
+      list = get_list
+      list[task_num.to_i].contexts = cons
+      list.save!
+    end
+
     desc "pri | priority TASK_# NEW_PRIORITY", "Update TASK_# with NEW_PRIORITY"
     def pri task_num, pri
       list = get_list
