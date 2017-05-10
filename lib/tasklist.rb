@@ -24,6 +24,12 @@ module Askew
       contexts.flatten.uniq 
     end
 
+    def search term
+      matches = {}
+      self.each { |key,value| matches[key] = value if value.raw.include? term }
+      matches
+    end
+
     def for_project project
       project_tasks = {}
       self.each { |key,value| project_tasks[key] = value if value.projects.include? project }

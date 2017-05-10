@@ -26,6 +26,11 @@ module Askew
       end
     end
 
+    desc "search TERM", "List all tasks that contain TERM"
+    def search term
+      print_list get_list.search term 
+    end
+
     desc "for_project X", "List all tasks connected to project X"
     def for_project proj
       print_list get_list.for_project proj
