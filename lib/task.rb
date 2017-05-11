@@ -40,7 +40,7 @@ module Askew
     
     attr_accessor :contexts
 
-    attr_reader :projects
+    attr_accessor :projects
 
     def text
       @text ||= extract_item_text(raw)

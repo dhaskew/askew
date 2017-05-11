@@ -43,6 +43,13 @@ module Askew
       list.save!
     end
 
+    desc "proj TASK_# NEW_PROJECTS", "Replace existing projects for TASK_# with NEW_PROJECTS"
+    def proj task_num, *projs
+      list = get_list
+      list[task_num.to_i].projects = projs 
+      list.save!
+    end
+    
     desc "pri | priority TASK_# NEW_PRIORITY", "Update TASK_# with NEW_PRIORITY"
     def pri task_num, pri
       list = get_list
