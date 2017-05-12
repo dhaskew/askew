@@ -4,7 +4,7 @@ module Askew
 
   class TaskCommand < CommandBase 
 
-    desc "list", "List tasks/projects/contexts"  
+    desc "list", "List tasks/projects/contexts"
     subcommand "list", Askew::TaskListCommand
     
     desc "do TASK_#", "Mark TASK_# as done."
@@ -17,9 +17,9 @@ module Askew
 
     desc "undo TASK_#", "Mark TASK_# as not done"
     long_desc <<-LONGDESC
-      
+
       'askew task undo' will mark a task as not done and remove the completion marker(x) and or completion date as necesssary.
-       
+
       Insert ARCHIVE related comments as neeeded?
 
     LONGDESC
@@ -31,8 +31,20 @@ module Askew
         return
       end
 
-      list[task_num.to_i].undo! 
+      list[task_num.to_i].undo!
       puts "Item #{task_num} has been marked incomplete #{list[task_num.to_i].raw}"
+      list.save!
+    end
+
+    desc "tag TASK_# NEW_TAGS", "Replace existing tags for TASK_# with NEW_TAGS"
+    def tag task_num, *tags
+      list = get_list
+      new_tags = {}
+      tags.each do |kvpair|
+        pair = kvpair.split(':')
+        new_tags[pair[0]] = pair[1]
+      end
+      list[task_num.to_i].tags = new_tags
       list.save!
     end
 
@@ -46,7 +58,7 @@ module Askew
     desc "proj TASK_# NEW_PROJECTS", "Replace existing projects for TASK_# with NEW_PROJECTS"
     def proj task_num, *projs
       list = get_list
-      list[task_num.to_i].projects = projs 
+      list[task_num.to_i].projects = projs
       list.save!
     end
     
@@ -78,11 +90,11 @@ module Askew
     
     desc "remove | rm TASK_#", "Remove a task"
     def remove num
-      list = get_list 
+      list = get_list
       index_to_rm = num.to_i
-      if yes? "[y,yes] Ok to remove task #{num}? : #{list[index_to_rm].raw}" 
+      if yes? "[y,yes] Ok to remove task #{num}? : #{list[index_to_rm].raw}"
         list.delete(index_to_rm)
-        list.save! 
+        list.save!
       end
     end
 
@@ -96,7 +108,7 @@ module Askew
       def show_task num
         list = get_list
         task = list[num.to_i]
-        puts ""        
+        puts ""
         puts "Poperty            Value"
         puts "----------------------------------------------------"
         puts "ID                 #{num}" 

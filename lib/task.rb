@@ -34,7 +34,7 @@ module Askew
 
     attr_reader :completed_on
 
-    attr_reader :tags
+    attr_accessor :tags
 
     attr_accessor :priority
     
