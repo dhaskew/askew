@@ -57,6 +57,13 @@ module Askew
       list.save!
     end
 
+    desc "txt TASK_# NEW_TEXT", "Update TASK_# with NEW_TEXT"
+    def txt task_num, *text
+      list = get_list
+      list[task_num.to_i].text = text.join ' '
+      list.save!
+    end
+
     #map priority: :pri
 
     desc "add TASK_INFO", "Add a task"

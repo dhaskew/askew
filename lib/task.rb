@@ -46,6 +46,10 @@ module Askew
       @text ||= extract_item_text(raw)
     end
 
+    def text=(new_text)
+      @text = new_text
+    end
+
     def due_on
       begin
         Date.parse(tags[:due]) if tags[:due] =~ /(\d{4}-\d{2}-\d{2})/
