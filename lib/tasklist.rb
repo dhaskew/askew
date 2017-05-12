@@ -55,11 +55,19 @@ module Askew
     end
 
     def by_done
-      TaskList.new(select(&:done?))
+      done_tasks = {}
+      self.each { |key,value| done_tasks[key] = value if value.done? }
+      #TaskList.new(select(&:done?))
+      done_tasks
     end
 
     def by_not_done
       TaskList.new(select { |task| task.done? == false })
+    end
+
+    def archive_done
+      apath = ::File.dirname(@path) + "/done.txt"
+      alist = TaskList.new apath
     end
 
     def save!

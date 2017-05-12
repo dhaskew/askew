@@ -6,7 +6,14 @@ module Askew
 
     desc "list", "List tasks/projects/contexts"
     subcommand "list", Askew::TaskListCommand
-    
+
+    desc "archive", "Archive all done tasks"
+    def archive
+      list = get_list
+      list.archive_done
+      #list.save!
+    end
+
     desc "do TASK_#", "Mark TASK_# as done."
     def do task_num 
       list = get_list
