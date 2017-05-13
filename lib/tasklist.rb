@@ -57,7 +57,7 @@ module Askew
     def by_done
       done_tasks = {}
       self.each { |key,value| done_tasks[key] = value if value.done? }
-      #TaskList.new(select(&:done?))
+      self.sort_by {|key,value| [value.completed_on ? 0 : 1, value.completed_on || 0]}
       done_tasks
     end
 
@@ -67,7 +67,13 @@ module Askew
 
     def archive_done
       apath = ::File.dirname(@path) + "/done.txt"
-      alist = TaskList.new apath
+      ::File.open(apath, "a+") do |f|
+        by_done.each { |key,value| f.write(value.raw) }
+      end
+    end
+
+    def remove_done
+      self.delete_if { |key,value| value.done?}
     end
 
     def save!

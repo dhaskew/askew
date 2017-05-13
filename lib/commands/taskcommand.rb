@@ -11,7 +11,8 @@ module Askew
     def archive
       list = get_list
       list.archive_done
-      #list.save!
+      list.remove_done
+      list.save!
     end
 
     desc "do TASK_#", "Mark TASK_# as done."
