@@ -50,7 +50,9 @@ module Askew
       new_tags = {}
       tags.each do |kvpair|
         pair = kvpair.split(':')
-        new_tags[pair[0]] = pair[1]
+        new_key = pair[0] #first colon is the tag key
+        new_value = pair[1..-1].join(':') #rejoin incase the value had a colon in it.
+        new_tags[new_key] = new_value
       end
       list[task_num.to_i].tags = new_tags
       list.save!
