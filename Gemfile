@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 #runtime dependencies
 gem 'thor'
+gem 'os'
 
 #development dependencies
 gem 'pry'

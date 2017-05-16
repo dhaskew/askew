@@ -13,6 +13,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    os (1.0.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -35,6 +36,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest-reporters
+  os
   pry
   pry-doc
   simplecov
