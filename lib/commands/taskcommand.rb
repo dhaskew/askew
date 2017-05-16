@@ -14,8 +14,6 @@ module Askew
       list[task_num.to_i].tags.each do |key,value|
         next if !key.match(/^link/)
         result = `#{OS.open_file_command} #{value}`
-        #result = `xdg-open #{value}` if OS.linux?
-        #result = `open #{value}` if OS.mac?
         puts "Link must begin with http or https" if OS.mac? && !value.match(/^http/)
       end
     end
