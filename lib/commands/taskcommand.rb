@@ -7,6 +7,18 @@ module Askew
     desc "list", "List tasks/projects/contexts"
     subcommand "list", Askew::TaskListCommand
 
+    desc "nav TASK_#", "Navigate to link tags"
+    def nav task_num
+      list = get_list
+      list[task_num.to_i].tags.each do |key,value|
+        next if !key.match(/^link/)
+        result = `xdg-open #{value}`
+        #cmd = 'xdg-open #{value}'
+        #success = %x("#{cmd}")
+        #puts "Command run successfully" if success
+      end
+    end
+
     desc "archive", "Archive all done tasks"
     def archive
       list = get_list
