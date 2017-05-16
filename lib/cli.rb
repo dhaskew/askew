@@ -2,6 +2,7 @@
 require 'yaml'
 require 'pry'
 require 'thor'
+require 'os'
 
 Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
 

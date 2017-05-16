@@ -9,13 +9,14 @@ module Askew
 
     desc "nav TASK_#", "Navigate to link tags"
     def nav task_num
+      puts "No support for #{RUBY_PLATFORM}" if OS.windows?
       list = get_list
       list[task_num.to_i].tags.each do |key,value|
         next if !key.match(/^link/)
-        result = `xdg-open #{value}`
-        #cmd = 'xdg-open #{value}'
-        #success = %x("#{cmd}")
-        #puts "Command run successfully" if success
+        result = `#{OS.open_file_command} #{value}`
+        #result = `xdg-open #{value}` if OS.linux?
+        #result = `open #{value}` if OS.mac?
+        puts "Link must begin with http or https" if OS.mac? && !value.match(/^http/)
       end
     end
 
