@@ -61,15 +61,15 @@ module Askew
         task_list.flatten.each_with_index {|item,index| ids << item if index.even?} 
         #find the char count of the biggest line # 
         max = ids.max.to_s.size
-        
+
         task_list.each do |key,value|
           if(value.done?)
-            print "#{key.to_s.rjust(max,' ')} #{value.raw}".red.bold
+            puts "#{key.to_s.rjust(max,' ')} #{value.raw}".red.bold
           else
             puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
           end 
         end
-      
+
       end
 
     end
