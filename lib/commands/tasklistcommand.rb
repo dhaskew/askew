@@ -64,7 +64,7 @@ module Askew
 
         task_list.each do |key,value|
           if(value.done?)
-            puts "#{key.to_s.rjust(max,' ')} #{value.raw}".red.bold
+            puts "#{key.to_s.rjust(max,' ')} #{value.raw.sub("\n","")}".red.bold
           else
             puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
           end 
