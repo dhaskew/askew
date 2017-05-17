@@ -3,8 +3,8 @@ module Askew
   class VersionCommand < CommandBase 
 
     VERSION_MAJOR    = '0'
-    VERSION_MINOR    = '0'
-    VERSION_PATCH    = '2'
+    VERSION_MINOR    = '5'
+    VERSION_PATCH    = '0'
 
     VERSION = VERSION_MAJOR + "." +  VERSION_MINOR + "." + VERSION_PATCH
     
