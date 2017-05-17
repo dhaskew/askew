@@ -22,7 +22,7 @@ module Askew
     DUE_ON_PATTERN = /(?:due:)(\d{4}-\d{2}-\d{2})(?:\s+|$)/i
 
     # The regex used to match generic tags.
-    TAGS_PATTERN = /([a-z0-9_-]+):([a-z0-9_:\/\/.-]+)/i
+    TAGS_PATTERN = /([a-z0-9_-]+):([a-z0-9_:\/\/.\(\)-]+)/i
 
     # Extracts the readable text content of a task line, stripping out all the
     # discrete pieces of metadata (priority, dates, completion flag, projects,
