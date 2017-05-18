@@ -62,7 +62,23 @@ module Askew
         #find the char count of the biggest line # 
         max = ids.max.to_s.size
 
+        puts ""
+        puts "#{'#'.rjust(max, ' ')} Pri  Created     Task"
+        puts "-"*150
+
         task_list.each do |key,value|
+
+          num = "#{key.to_s.rjust(max,' ')}" 
+
+          pri = "   "
+          pri = "(#{value.priority})" if value.priority != nil
+
+          line = "#{num} #{pri} #{value.created_on}  #{value.text}"
+          
+          puts line
+
+          next
+
           if(value.done?)
             puts "#{key.to_s.rjust(max,' ')} #{value.raw.sub("\n","")}".red.bold
           else
@@ -70,6 +86,11 @@ module Askew
           end 
         end
 
+        footer = "-"*150
+        puts footer
+        footer = "Task Count: #{task_list.count}"
+        puts footer
+        puts ""
       end
 
     end
