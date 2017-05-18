@@ -7,6 +7,7 @@ gem 'os'
 #development dependencies
 gem 'pry'
 gem 'pry-doc'
+gem 'pry-byebug'
 
 #testing dependencies
 gem 'minitest-reporters'
