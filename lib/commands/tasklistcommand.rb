@@ -63,8 +63,12 @@ module Askew
         max = ids.max.to_s.size
 
         puts ""
-        puts "#{'#'.rjust(max, ' ')} Pri  Created     Task"
+        puts "#{'#'*max} Pri Created     Project  Context    Task"
         puts "-"*150
+
+        temp_list = get_list
+        projects = temp_list.projects
+        contexts = temp_list.contexts 
 
         task_list.each do |key,value|
 
@@ -73,22 +77,28 @@ module Askew
           pri = "   "
           pri = "(#{value.priority})" if value.priority != nil
 
-          line = "#{num} #{pri} #{value.created_on}  #{value.text}"
+          proj = value.projects.count == 1 ? value.projects[0] : "Multiple"
+          proj =  proj.ljust(8, ' ')
+
+          con = value.contexts.count == 1 ? value.contexts[0] : "Multiple"
+          con = con.ljust(8, ' ')
+
+          txt = value.text[0..70]
+          txt = txt.ljust(70, ' ')
+
+          tags = ""
+          
+          value.tags.each {|key,value| tags = tags + key.to_s + ":" + value }
+
+          line = "#{num} #{pri} #{value.created_on}  #{proj} #{con}   #{txt} #{tags}"
           
           puts line
 
-          next
-
-          if(value.done?)
-            puts "#{key.to_s.rjust(max,' ')} #{value.raw.sub("\n","")}".red.bold
-          else
-            puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
-          end 
         end
 
         footer = "-"*150
         puts footer
-        footer = "Task Count: #{task_list.count}"
+        footer = "Task Count: #{task_list.count} | Projects: #{projects.join(' , ')} | Contexts: #{contexts.join(' , ')}"
         puts footer
         puts ""
       end
