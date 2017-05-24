@@ -50,6 +50,7 @@ module Askew
         proj =  proj.ljust(8, ' ')
 
         con = value.contexts.count == 1 ? value.contexts[0] : "Multiple"
+        con = "" if !value.contexts.any?
         con = con.ljust(8, ' ')
         
         truncate = "[...]"
