@@ -60,13 +60,13 @@ module Askew
 
         tags = ""
 
-
-
         value.tags.each {|key,value| tags = tags + key.to_s + ":" + value }
 
         tags = tags[0..50] + " " + truncate if tags.size > 50
 
         line = "#{num} #{pri} #{proj} #{con}   #{txt} #{tags}"
+
+        line = line.red.bold if value.done?
 
         puts line
 
