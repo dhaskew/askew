@@ -63,7 +63,7 @@ module Askew
         max = ids.max.to_s.size
 
         puts ""
-        puts "#{'#'*max} Pri Created     Project  Context    Task"
+        puts "#{'#'*max} Pri Project  Context    Task"
         puts "-"*150
 
         temp_list = get_list
@@ -87,11 +87,16 @@ module Askew
           txt = txt.ljust(70, ' ')
 
           tags = ""
-          
+
+          truncate = "[...]"
+
+
           value.tags.each {|key,value| tags = tags + key.to_s + ":" + value }
 
-          line = "#{num} #{pri} #{value.created_on}  #{proj} #{con}   #{txt} #{tags}"
-          
+          tags = tags[0..50] + " " + truncate if tags.size > 50
+
+          line = "#{num} #{pri} #{proj} #{con}   #{txt} #{tags}"
+
           puts line
 
         end
