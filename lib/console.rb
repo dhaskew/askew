@@ -29,8 +29,10 @@ module Askew
       #find the char count of the biggest line # 
       max = ids.max.to_s.size
 
+      task_column_size = 70
+
       puts ""
-      puts "#{'#'*max} Pri Project  Context    Task"
+      puts "#{'#'*max} Pri Project  Context    #{'Task'.ljust(task_column_size,' ')} Tags"
       puts "-"*150
 
       temp_list = ListManager.get_list
@@ -49,13 +51,15 @@ module Askew
 
         con = value.contexts.count == 1 ? value.contexts[0] : "Multiple"
         con = con.ljust(8, ' ')
+        
+        truncate = "[...]"
 
-        txt = value.text[0..70]
-        txt = txt.ljust(70, ' ')
+        txt = value.text[0..63]
+        txt = txt + " " + truncate if value.text.size > 65
+        txt = txt.ljust(task_column_size, ' ')
 
         tags = ""
 
-        truncate = "[...]"
 
 
         value.tags.each {|key,value| tags = tags + key.to_s + ":" + value }
