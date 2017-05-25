@@ -10,7 +10,7 @@ module Askew
     desc "nav TASK_#", "Navigate to link tags"
     def nav task_num
       puts "No support for #{RUBY_PLATFORM}" if OS.windows?
-      list = get_list
+      list = ListManager.get_list
       list[task_num.to_i].tags.each do |key,value|
         next if !key.match(/^link/)
         result = `#{OS.open_file_command} '#{value}'`
@@ -20,7 +20,7 @@ module Askew
 
     desc "archive", "Archive all done tasks"
     def archive
-      list = get_list
+      list = ListManager.get_list
       list.archive_done
       list.remove_done
       list.save!
@@ -28,7 +28,7 @@ module Askew
 
     desc "do TASK_#", "Mark TASK_# as done."
     def do task_num 
-      list = get_list
+      list = ListManager.get_list
       list[task_num.to_i].do!
       puts "Item #{task_num} has been completed: #{list[task_num.to_i].raw}"
       list.save!
@@ -43,7 +43,7 @@ module Askew
 
     LONGDESC
     def undo task_num
-      list = get_list
+      list = ListManager.get_list
 
       if !list[task_num.to_i].done?
         puts "Item #{task_num} is not yet completed. No change made."
@@ -57,7 +57,7 @@ module Askew
 
     desc "tag TASK_# NEW_TAGS", "Replace existing tags for TASK_# with NEW_TAGS"
     def tag task_num, *tags
-      list = get_list
+      list = ListManager.get_list
       new_tags = {}
       tags.each do |kvpair|
         pair = kvpair.split(':')
@@ -71,28 +71,28 @@ module Askew
 
     desc "con TASK_# NEW_CONTEXTS", "Replace existing contexts for TASK_# with NEW_CONTEXTS"
     def con task_num, *cons
-      list = get_list
+      list = ListManager.get_list
       list[task_num.to_i].contexts = cons
       list.save!
     end
 
     desc "proj TASK_# NEW_PROJECTS", "Replace existing projects for TASK_# with NEW_PROJECTS"
     def proj task_num, *projs
-      list = get_list
+      list = ListManager.get_list
       list[task_num.to_i].projects = projs
       list.save!
     end
     
     desc "pri | priority TASK_# NEW_PRIORITY", "Update TASK_# with NEW_PRIORITY"
     def pri task_num, pri
-      list = get_list
+      list = ListManager.get_list
       list[task_num.to_i].priority = pri
       list.save!
     end
 
     desc "txt TASK_# NEW_TEXT", "Update TASK_# with NEW_TEXT"
     def txt task_num, *text
-      list = get_list
+      list = ListManager.get_list
       list[task_num.to_i].text = text.join ' '
       list.save!
     end
@@ -102,7 +102,7 @@ module Askew
     desc "add TASK_INFO", "Add a task"
     def add *task_text
       new_task = Askew::Task.new task_text.join ' '
-      list = get_list
+      list = ListManager.get_list
       list[list.count + 1] = new_task
       list.save!
     end
@@ -111,7 +111,7 @@ module Askew
     
     desc "remove | rm TASK_#", "Remove a task"
     def remove num
-      list = get_list
+      list = ListManager.get_list
       index_to_rm = num.to_i
       if yes? "[y,yes] Ok to remove task #{num}? : #{list[index_to_rm].raw}"
         list.delete(index_to_rm)
@@ -121,58 +121,8 @@ module Askew
 
     desc "show TASK_#", "Show all the details of a task"
     def show num
-      show_task num 
+      Console.show_task num 
     end
-
-    no_commands do
-    
-      def show_task num
-        list = get_list
-        task = list[num.to_i]
-        puts ""
-        puts "Poperty            Value"
-        puts "----------------------------------------------------"
-        puts "ID                 #{num}" 
-        puts "Priority           #{task.priority}" if task.priority
-        puts "Text               #{task.text}"
-        puts "Projects           #{task.projects.join " , " }" if task.projects.any?
-        puts "Contexts           #{task.contexts.join " , "}" if task.contexts.any?
-        puts "Tags               #{task.tags.map{|k,v| "#{k}:#{v}"}.join(' , ')}" if task.tags.any?
-        puts "Created            #{task.created_on}" if task.created_on 
-        puts "Completed          #{task.completed_on}" if task.completed_on 
-        puts "Raw                #{task.raw}"
-        puts ""
-      end
-
-      def get_sorted_list
-        list = get_list
-        sorted = list.sort_by {|key, value| [value.priority ? 0 : 1, value.priority || 0]} # list by priorty with nulls at the end
-      end 
-
-      def get_list
-        list = Askew::TaskList.new Startup.config.todo_file
-      end
-
-      def print_list task_list=nil
-        return if task_list == nil
-        
-        ids = []
-        #collect only the line #'s
-        task_list.flatten.each_with_index {|item,index| ids << item if index.even?} 
-        #find the char count of the biggest line # 
-        max = ids.max.to_s.size
-        
-        task_list.each do |key,value|
-          if(value.done?)
-            print "#{key.to_s.rjust(max,' ')} #{value.raw}".red.bold
-          else
-            puts "#{key.to_s.rjust(max,' ')} #{value.raw}" 
-          end 
-        end
-      
-      end
-
-    end 
 
     default_task :list
 
