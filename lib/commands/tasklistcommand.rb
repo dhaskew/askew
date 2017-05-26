@@ -5,7 +5,7 @@ module Askew
     def self.subcommand_prefix
       "task list"    
     end
-   
+
     desc "projects", "List all known projects"
     def projects
       puts ListManager.get_list.projects.sort
@@ -33,12 +33,16 @@ module Askew
 
     desc "for_project X", "List all tasks connected to project X"
     def for_project proj
-      Console.print_list ListManager.get_list.for_project proj
+      list_for_proj = ListManager.get_list.for_project proj
+      sorted_list = ListManager.sort_by_priority list_for_proj
+      Console.print_list sorted_list
     end
 
     desc "for_context X", "List all tasks connected to context X"
     def for_context con
-      Console.print_list ListManager.get_list.for_context con
+      list_for_con = ListManager.get_list.for_context con
+      sorted = ListManager.sort_by_priority list_for_con
+      Console.print_list sorted
     end
 
    default_task :all 
