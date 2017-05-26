@@ -82,7 +82,42 @@ module Askew
       list[task_num.to_i].projects = projs
       list.save!
     end
-    
+
+    desc "inpri TASK_#", "Increase priority of TASK_# by one degree"
+    def inpri task_num
+      list = ListManager.get_list
+      task = list[task_num.to_i]
+
+      if task.priority == "A"
+        puts "Task already set to highest priority 'A'"
+        return
+      end
+
+      letters = ('B'..'Z').to_a
+      if letters.include? task.priority
+        list[task_num.to_i].priority = letters[(letters.index task.priority) - 1] # B becomes A, C becomes B, etc
+        list.save!
+      end
+
+    end
+
+    desc "depri TASK_#", "Deprioritize TASK_# by one degree"
+    def depri task_num
+      list = ListManager.get_list
+      task = list[task_num.to_i]
+
+      if task.priority == "Z"
+        puts "Task already set to lowest priority 'Z'"
+        return
+      end
+
+      letters = ('A'..'Z').to_a
+      if letters.include? task.priority
+        list[task_num.to_i].priority = letters[(letters.index task.priority) + 1] # A becomes B, C becomes D, etc
+        list.save!
+      end
+    end
+
     desc "pri | priority TASK_# NEW_PRIORITY", "Update TASK_# with NEW_PRIORITY"
     def pri task_num, pri
       list = ListManager.get_list
