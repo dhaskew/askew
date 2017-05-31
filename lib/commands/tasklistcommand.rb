@@ -28,7 +28,9 @@ module Askew
 
     desc "search TERM", "List all tasks that contain TERM"
     def search term
-      Console.print_list ListManager.get_list.search term 
+      list_for_search = ListManager.get_list.search term
+      sorted_list = ListManager.sort_by_priority list_for_search
+      Console.print_list sorted_list
     end
 
     desc "for_project X", "List all tasks connected to project X"
