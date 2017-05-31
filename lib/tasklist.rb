@@ -1,14 +1,19 @@
 module Askew
   class TaskList < Hash
     def initialize(list)
-      @path = list
-      temp = Askew::File.read(list)
-      counter = 1 
-      temp.each do |task|
-        self[counter] = task
-        counter += 1
-      end 
-    end
+      case list
+      when Hash
+        self.merge! list
+      when String
+        @path = list
+        temp = Askew::File.read(list)
+        counter = 1
+        temp.each do |task|
+          self[counter] = task
+          counter += 1
+        end
+      end
+   end
 
     attr_reader :path
 
@@ -43,15 +48,15 @@ module Askew
     end
 
     def by_priority(priority)
-      TaskList.new(select { |task| task.priority == priority })
+      TaskList.new(select { |key,task| task.priority == priority })
     end
 
     def by_context(context)
-      TaskList.new(select { |task| task.contexts.include? context })
+      TaskList.new(select { |key,task| task.contexts.include? context })
     end
 
     def by_project(project)
-      TaskList.new(select { |task| task.projects.include? project })
+      TaskList.new(select { |key,task| task.projects.include? project })
     end
 
     def by_done
@@ -62,7 +67,7 @@ module Askew
     end
 
     def by_not_done
-      TaskList.new(select { |task| task.done? == false })
+      TaskList.new(select { |key,task| task.done? == false })
     end
 
     def archive_done
