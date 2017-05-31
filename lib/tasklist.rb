@@ -32,19 +32,7 @@ module Askew
     def search term
       matches = {}
       self.each { |key,value| matches[key] = value if value.raw.include? term }
-      matches
-    end
-
-    def for_project project
-      project_tasks = {}
-      self.each { |key,value| project_tasks[key] = value if value.projects.include? project }
-      project_tasks
-    end
-
-    def for_context context
-      context_tasks = {}
-      self.each { |key,value| context_tasks[key] = value if value.contexts.include? context }
-      context_tasks
+      TaskList.new(matches)
     end
 
     def by_priority(priority)

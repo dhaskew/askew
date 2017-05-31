@@ -19,7 +19,7 @@ module Askew
     desc "all", "List all tasks"
     def all 
       begin
-        Console.print_list ListManager.get_sorted_list
+        Console.print_tasklist ListManager.get_sorted_tasklist
       rescue Exception => e
         puts "Unable to load your todo list."
         puts e
@@ -28,23 +28,20 @@ module Askew
 
     desc "search TERM", "List all tasks that contain TERM"
     def search term
-      list_for_search = ListManager.get_list.search term
-      sorted_list = ListManager.sort_by_priority list_for_search
-      Console.print_list sorted_list
+      tasklist_for_search = ListManager.get_sorted_tasklist.search term
+      Console.print_tasklist tasklist_for_search
     end
 
     desc "for_project X", "List all tasks connected to project X"
     def for_project proj
-      list_for_proj = ListManager.get_list.for_project proj
-      sorted_list = ListManager.sort_by_priority list_for_proj
-      Console.print_list sorted_list
+      tasklist_for_proj = ListManager.get_sorted_tasklist.by_project proj
+      Console.print_tasklist tasklist_for_proj
     end
 
     desc "for_context X", "List all tasks connected to context X"
     def for_context con
-      list_for_con = ListManager.get_list.for_context con
-      sorted = ListManager.sort_by_priority list_for_con
-      Console.print_list sorted
+      tasklist_for_con = ListManager.get_sorted_tasklist.by_context con
+      Console.print_tasklist tasklist_for_con
     end
 
    default_task :all 

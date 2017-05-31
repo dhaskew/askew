@@ -1,7 +1,5 @@
 module Askew
   class Console
-
-       
     def self.show_task num
       list = ListManager.get_list
       task = list[num.to_i]
@@ -20,14 +18,11 @@ module Askew
       puts ""
     end
 
-    def self.print_list task_list=nil
+    def self.print_tasklist task_list=nil
       return if task_list == nil
-      
-      ids = []
-      #collect only the line #'s
-      task_list.flatten.each_with_index {|item,index| ids << item if index.even?} 
-      #find the char count of the biggest line # 
-      max = ids.max.to_s.size
+      return if !task_list.instance_of? TaskList
+
+      max = task_list.keys.max.to_s.size
 
       task_column_size = 70
 
@@ -35,13 +30,12 @@ module Askew
       puts "#{'#'*max} Pri Project  Context    #{'Task'.ljust(task_column_size,' ')} Tags"
       puts "-"*150
 
-      temp_list = ListManager.get_list
-      projects = temp_list.projects
-      contexts = temp_list.contexts 
+      projects = task_list.projects
+      contexts = task_list.contexts
 
       task_list.each do |key,value|
 
-        num = "#{key.to_s.rjust(max,' ')}" 
+        num = "#{key.to_s.rjust(max,' ')}"
 
         pri = "   "
         pri = "(#{value.priority})" if value.priority != nil
@@ -75,11 +69,9 @@ module Askew
 
       footer = "-"*150
       puts footer
-      footer = "Task Count: #{task_list.count} | Projects: #{projects.join(' , ')} | Contexts: #{contexts.join(' , ')}"
+      footer = "Task Count: #{task_list.count} | Projects: #{projects.join(' , ')} | Contexts: #{contexts.size > 0 ? contexts.join(' , ') : "None" }"
       puts footer
       puts ""
     end
-
-  end
-
-end
+  end #end class
+end #end module
