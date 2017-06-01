@@ -119,7 +119,7 @@ module Askew
     end
 
     desc "pri | priority TASK_# NEW_PRIORITY", "Update TASK_# with NEW_PRIORITY"
-    def pri task_num, pri
+    def pri task_num, pri=nil
       list = ListManager.get_list
       list[task_num.to_i].priority = pri
       list.save!
