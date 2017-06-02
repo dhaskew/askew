@@ -24,10 +24,24 @@ module Askew
 
       max = task_list.keys.max.to_s.size
 
+      spacer = " "
       task_column_size = 70
+      context_column_size = 10
+      project_column_size = 10
 
       puts ""
-      puts "#{'#'*max} Pri Project  Context    #{'Task'.ljust(task_column_size,' ')} Tags"
+      print "#{'#'*max}"
+      print spacer
+      print "Pri"
+      print spacer
+      print "#{'Project'.ljust(project_column_size, ' ')}"
+      print spacer
+      print "#{'Context'.ljust(context_column_size,' ')}"
+      print spacer
+      print "#{'Task'.ljust(task_column_size,' ')}"
+      print spacer
+      print "Tags"
+      puts ""
       puts "-"*150
 
       projects = task_list.projects
@@ -42,11 +56,11 @@ module Askew
 
         proj = value.projects.count == 1 ? value.projects[0] : "Multiple"
         proj = "" if !value.projects.any?
-        proj =  proj.ljust(8, ' ')
+        proj =  proj.ljust(project_column_size, ' ')
 
         con = value.contexts.count == 1 ? value.contexts[0] : "Multiple"
         con = "" if !value.contexts.any?
-        con = con.ljust(8, ' ')
+        con = con.ljust(context_column_size, ' ')
         
         truncate = "[...]"
 
@@ -60,7 +74,18 @@ module Askew
 
         tags = tags[0..50] + " " + truncate if tags.size > 50
 
-        line = "#{num} #{pri} #{proj} #{con}   #{txt} #{tags}"
+        #line = "#{num} #{pri} #{proj} #{con}   #{txt} #{tags}"
+        line  = "#{num}"
+        line += spacer
+        line += "#{pri}"
+        line += spacer
+        line += "#{proj}"
+        line += spacer
+        line += "#{con}"
+        line += spacer
+        line += "#{txt}"
+        line += spacer
+        line += "#{tags}"
 
         line = line.red.bold if value.done?
 
