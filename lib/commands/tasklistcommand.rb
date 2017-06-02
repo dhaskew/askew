@@ -16,6 +16,18 @@ module Askew
       puts ListManager.get_list.contexts.sort
     end
 
+    desc "inbox", "List all tasks with no project or context set"
+    def inbox
+      all_tasks = ListManager.get_sorted_tasklist
+      inbox = all_tasks.select { |key,task|
+                                    task.contexts.count == 0 &&
+                                    task.projects.count == 0
+                               }
+
+      inbox = TaskList.new(inbox)
+      Console.print_tasklist inbox
+    end
+
     desc "all", "List all tasks"
     def all 
       begin
