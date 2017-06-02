@@ -41,6 +41,7 @@ module Askew
         pri = "(#{value.priority})" if value.priority != nil
 
         proj = value.projects.count == 1 ? value.projects[0] : "Multiple"
+        proj = "" if !value.projects.any?
         proj =  proj.ljust(8, ' ')
 
         con = value.contexts.count == 1 ? value.contexts[0] : "Multiple"
@@ -69,7 +70,7 @@ module Askew
 
       footer = "-"*150
       puts footer
-      footer = "Task Count: #{task_list.count} | Projects: #{projects.join(' , ')} | Contexts: #{contexts.size > 0 ? contexts.join(' , ') : "None" }"
+      footer = "Task Count: #{task_list.count} | Projects: #{projects.size > 0 ? projects.join(' , ') : "None"} | Contexts: #{contexts.size > 0 ? contexts.join(' , ') : "None" }"
       puts footer
       puts ""
     end
