@@ -3,6 +3,7 @@ require 'date'
 
 module Askew
 
+  # @author David Askew
   class Task
     include Comparable
     include Askew::PatternHelpers
@@ -28,6 +29,8 @@ module Askew
       end
     end
 
+    # The raw line string from the tasklist file the task originates from.
+    # @return [String] the raw text of the task.
     attr_reader :raw
 
     attr_reader :created_on
@@ -66,6 +69,9 @@ module Askew
       @is_completed
     end
 
+    # Marks the task as done.
+    #
+    #
     def do!
       @completed_on = Date.today
       @is_completed = true
