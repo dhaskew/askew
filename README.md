@@ -4,6 +4,8 @@
 * bundle install
 * ./askew help
 
+rake -T # show useful helpers
+
 yard server # start local server to view documentation
 view at http://localhost:8808
 
