@@ -25,7 +25,8 @@ module Askew
                                }
 
       inbox = TaskList.new(inbox)
-      Console.print_tasklist inbox
+
+      Console.print_tasklist inbox if inbox.count >  0
     end
 
     desc "all", "List all tasks"
