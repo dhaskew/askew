@@ -22,7 +22,7 @@ module Askew
     def archive
       list = ListManager.get_list
       list.archive_done
-      list.remove_done
+      list.remove_done!
       list.save!
     end
 

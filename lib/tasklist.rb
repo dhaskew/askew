@@ -65,7 +65,7 @@ module Askew
       end
     end
 
-    def remove_done
+    def remove_done!
       self.delete_if { |key,value| value.done?}
     end
 
