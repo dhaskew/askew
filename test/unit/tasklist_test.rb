@@ -10,8 +10,9 @@ class TaskListTest < Minitest::Test
   end
 
   def test_tasklist_can_be_created_from_path
-    skip
-    #fakefs setup first? 
+    tfile = File.expand_path('../../../test/inputs/tasks.txt', __FILE__)
+    @tl2 = Askew::TaskList.new tfile
+    assert_equal 4 , @tl2.size
   end
 
   def test_tasklist_can_be_created_from_hash_of_tasks
@@ -21,13 +22,11 @@ class TaskListTest < Minitest::Test
   def test_tasklist_has_list_of_projects
     assert_equal true, @tl1.projects.size > 0
     assert_equal Array, @tl1.projects.class
-    #check contents of projects list?
   end
 
   def test_tasklist_has_list_of_contexts
     assert_equal true , @tl1.contexts.size > 0
     assert_equal Array, @tl1.contexts.class
-    #check contents of contexts list?
   end
 
   def test_tasklist_can_be_searched
