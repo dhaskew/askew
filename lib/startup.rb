@@ -6,22 +6,18 @@ module Askew
 
       @@config_file = optional_config != nil ? optional_config : ENV['HOME'] + "/.askew/askew.config"
 
-      @@config = Config.new config_file 
+      @@config = Config.new config_file
 
-      if !@@config.valid?
-        exit 1
-      else
-      #puts "Loading config from #{config.path}"
-      # should we not ask the user if they would like us to create one for them on first run?
-      end
+      raise "No Valid Config" if !@@config.valid?
+
     end
 
     def self.config
-      @@config
+      @@config ||= nil
     end
 
     def self.config_file
-      @@config_file
+      @@config_file ||= nil
     end
   end
 
