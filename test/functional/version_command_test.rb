@@ -30,9 +30,5 @@ class CliTest < Minitest::Test
     }
     assert out == Askew::VersionCommand::VERSION_PATCH + "\n"
   end
-  
-  def test_cli_help_option
-    skip 
-  end
 
 end
