@@ -1,6 +1,6 @@
 require_relative "../test_helper.rb"
 
-class CliTest < Minitest::Test
+class VersionCommandTest < Minitest::Test
 
   def test_cli_version_command
     out, err = capture_io {
