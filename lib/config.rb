@@ -7,6 +7,8 @@ module Askew
 
     attr_reader :path, :todo_file
 
+    DEFAULT_CONFIG_FILE = ENV['HOME'] + "/.askew/askew.config"
+
     def initialize(path)
       @path = path
       @valid = false
