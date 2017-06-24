@@ -10,6 +10,5 @@ Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new()]
 require "minitest/autorun"
 require "thor"
 require "pry"
-Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
 
-require "fakefs/safe"
+Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}

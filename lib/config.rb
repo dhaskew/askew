@@ -29,6 +29,7 @@ module Askew
       rescue ArgumentError => e
         puts "Could not parse YAML: #{e.message}"
       rescue Exception => e
+        puts e.backtrace.join "\n\t"
         puts "Unable to load config from: #{path}" 
         puts "Exception : #{e.message}"
       end

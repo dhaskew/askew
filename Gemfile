@@ -12,4 +12,3 @@ gem 'pry-byebug'
 #testing dependencies
 gem 'minitest-reporters'
 gem 'simplecov', :require => false, :group =>  :test
-gem 'fakefs'

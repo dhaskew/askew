@@ -26,7 +26,7 @@ module Askew
         Startup.process_config options[:config]
       rescue Exception
         puts "Unable to load a valid configuration!"
-        exit 1
+        #exit 1
       end
     end
 
