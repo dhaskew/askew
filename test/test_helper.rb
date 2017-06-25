@@ -2,6 +2,10 @@ require 'simplecov'
 
 SimpleCov.start do
   add_filter "/test/" # no code coverage on the test files themselves
+  add_group "libs" do |src_file|
+    File.dirname(src_file.filename).end_with? 'lib'
+  end
+  add_group "thor commands", "lib/commands"
 end
 
 require "minitest/reporters"
