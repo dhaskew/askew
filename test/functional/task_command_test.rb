@@ -4,7 +4,7 @@ class TaskCommandTest < Minitest::Test
 
   ORIGINAL_CONFIG_FILE_CONSTANT_VALUE = Askew::Config::DEFAULT_CONFIG_FILE
   ORIGINAL_CONFIG_FILE_CONSTANT_NAME = "DEFAULT_CONFIG_FILE"
- 
+
   TEST_CONFIG_FILE = "test/inputs/test.config"
 
   def setup
@@ -18,32 +18,34 @@ class TaskCommandTest < Minitest::Test
     Askew::Config.const_set(ORIGINAL_CONFIG_FILE_CONSTANT_NAME, ORIGINAL_CONFIG_FILE_CONSTANT_VALUE)
   end
 
-  def test_task_can_be_added
-   skip
-   begin 
-    #config_path = File.expand_path(TEST_CONFIG_FILE)
-    #config = Askew::Config.new config_path
-    
+  def test_stub_test
 
-    #FakeFS.with_fresh do
-        #puts Dir.pwd
-        #FakeFS::FileSystem.clone "/home/dhaskew/projects/askew/test" 
-        #FakeFS::FileSystem.clone(config_path)
-    #    puts config
-        #task_file = "/home/askew/.bashrc"#File.expand_path(config.todo_file)
-        #puts task_file
-        #FakeFS::FileSystem.clone(task_file)
-        #puts "hello"
-      #out, err = capture_io {
-     #   Askew::CLI.start %w{ version }
-      #}
-    #end
-   rescue Exception => e
-     puts e.backtrace.join "\n\t"
-     puts "exception happend"
-   end
-    #puts out
-    #assert out == Askew::VersionCommand::VERSION + "\n"
+    #mock example
+    mock_config = Minitest::Mock.new
+    mock_config.expect :path , "foobar"
+    mock_config.expect :valid?, "foobar"
+
+    Askew::Config.stub(:new , mock_config) do
+      config = Askew::Config.new(Askew::Config::DEFAULT_CONFIG_FILE)
+      assert_equal config.valid? , "foobar"
+      assert_equal config.path , "foobar"
+    end
+
+    #stub example
+    test_config = Askew::Config.new(Askew::Config::DEFAULT_CONFIG_FILE)
+
+    test_config.stub :valid?, "foobar" do
+      assert_equal test_config.valid? ,"foobar"
+    end
+
+  end
+
+  def test_task_can_be_added
+    skip
+    out, err = capture_io {
+      Askew::CLI.start %w{ version }
+    }
+    assert out == Askew::VersionCommand::VERSION + "\n"
   end
 
   def test_task_can_be_removed
