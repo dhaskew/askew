@@ -4,8 +4,7 @@ class TaskCommandTest < Minitest::Test
 
   ORIGINAL_CONFIG_FILE_CONSTANT_VALUE = Askew::Config::DEFAULT_CONFIG_FILE
   ORIGINAL_CONFIG_FILE_CONSTANT_NAME = "DEFAULT_CONFIG_FILE"
-
-  TEST_CONFIG_FILE = "test/inputs/test.config"
+  TEST_CONFIG_FILE = File.expand_path("test/inputs/test.config")
 
   def setup
     # https://stackoverflow.com/questions/3375360/how-to-redefine-a-ruby-constant-without-warning
@@ -40,12 +39,20 @@ class TaskCommandTest < Minitest::Test
 
   end
 
+  def test_validate_test_config_setup
+    skip
+    assert_equal Askew::Startup.config_file , TEST_CONFIG_FILE
+    assert_equal Askew::Startup.config_file , Askew::Config::DEFAULT_CONFIG_FILE
+    refute_equal Askew::Startup.config_file , ORIGINAL_CONFIG_FILE_CONSTANT_VALUE
+    assert_equal Askew::Startup.config.path , TEST_CONFIG_FILE
+  end
+
   def test_task_can_be_added
     skip
     out, err = capture_io {
       Askew::CLI.start %w{ version }
     }
-    assert out == Askew::VersionCommand::VERSION + "\n"
+    assert_equal  out , Askew::VersionCommand::VERSION + "\n"
   end
 
   def test_task_can_be_removed
