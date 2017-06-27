@@ -49,17 +49,51 @@ class TaskCommandTest < Minitest::Test
 
   def test_task_can_be_added
     skip
-    out, err = capture_io {
-      Askew::CLI.start %w{ version }
-    }
-    assert_equal  out , Askew::VersionCommand::VERSION + "\n"
   end
 
   def test_task_can_be_removed
     skip
   end
 
-  def test_task_can_be_shown
+
+  def test_show_task_has_header
+    skip
+  end
+
+  def test_shown_task_has_id
+    skip
+    #This works, but should mock the FileIO to read from memory
+    out, err = capture_io {
+      Askew::CLI.start %w{ task show 1 }
+    }
+    assert_match %r%ID%, out.lines[3]
+  end
+
+  def test_shown_task_has_text
+    skip
+  end
+
+  def test_shown_task_has_raw_line_info
+    skip
+  end
+
+  def test_shown_task_can_have_priority
+    skip
+  end
+
+  def test_shown_task_can_have_contexts
+    skip
+  end
+
+  def test_shown_task_can_have_projects
+    skip
+  end
+
+  def test_show_task_can_have_tags
+    skip
+  end
+
+  def test_shown_task_can_have_created_date
     skip
   end
 
