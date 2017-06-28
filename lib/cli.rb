@@ -3,10 +3,14 @@ require 'pry'
 require 'thor'
 require 'os'
 
-Dir[File.expand_path "./lib/**/*.rb"].each do |f| 
+Dir[File.expand_path "./lib/**/*.rb"].each do |f|
   if !f.include? 'askew.rb'
-    if !f.include? 'lib/askew/'
-      require_relative(f) 
+    if !f.include? 'client.rb'
+      if !f.include? 'lib/askew/'
+        if !f.include? 'lib/client/'
+          require_relative(f)
+        end
+      end 
     end 
   end
 end
