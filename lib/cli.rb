@@ -1,3 +1,8 @@
+require 'yaml'
+require 'pry'
+require 'thor'
+require 'os'
+
 Dir[File.expand_path "./lib/**/*.rb"].each do |f| 
   if !f.include? 'askew.rb'
     if !f.include? 'lib/askew/'
