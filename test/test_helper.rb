@@ -15,4 +15,8 @@ require "minitest/autorun"
 require "thor"
 require "pry"
 
-Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
+
+require_relative '../lib/askew.rb'
+require_relative '../lib/cli.rb'
+
+#Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}

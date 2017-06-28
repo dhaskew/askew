@@ -1,10 +1,10 @@
-
-require 'yaml'
-require 'pry'
-require 'thor'
-require 'os'
-
-Dir[File.expand_path "./lib/**/*.rb"].each{|f| require_relative(f)}
+Dir[File.expand_path "./lib/**/*.rb"].each do |f| 
+  if !f.include? 'askew.rb'
+    if !f.include? 'lib/askew/'
+      require_relative(f) 
+    end 
+  end
+end
 
 module Askew
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/cli.rb'
+require_relative '../lib/askew.rb'
+require_relative '../lib/cli.rb'
 
 # Start the program
 Askew::CLI.start(ARGV)
