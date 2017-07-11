@@ -34,6 +34,7 @@ module Askew
       begin
         Startup.process_config options[:config]
       rescue Exception
+        #https://airbrake.io/blog/ruby-exception-handling/systemexit
         puts "Unable to load a valid configuration!"
         #exit 1
       end
