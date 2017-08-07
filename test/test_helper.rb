@@ -9,9 +9,9 @@ SimpleCov.start do
     File.dirname(src_file.filename).end_with? 'askew'
   end
   add_group "client" do |src_file|
-    File.dirname(src_file.filename).end_with? 'client'
+    File.dirname(src_file.filename).include? 'client'
   end
-  add_group "thor commands", "lib/commands"
+  add_group "thor commands", "lib/client/commands"
 end
 
 require "minitest/reporters"
