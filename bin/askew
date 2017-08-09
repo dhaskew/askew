@@ -5,5 +5,5 @@ require_relative '../lib/client.rb'
 require_relative '../lib/cli.rb'
 
 # Start the program
-Askew::CLI.start(ARGV)
+AskewClient::CLI.start(ARGV)
 exit 0

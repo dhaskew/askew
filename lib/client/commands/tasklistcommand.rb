@@ -1,4 +1,4 @@
-module Askew
+module AskewClient
 
   class TaskListCommand < CommandBase
  
@@ -24,7 +24,7 @@ module Askew
                                     task.projects.count == 0
                                }
 
-      inbox = TaskList.new(inbox)
+      inbox = Askew::TaskList.new(inbox)
 
       Console.print_tasklist inbox if inbox.count >  0
     end

@@ -1,11 +1,11 @@
 require_relative 'tasklistcommand.rb'
 
-module Askew
+module AskewClient
 
   class TaskCommand < CommandBase 
 
     desc "list", "List tasks/projects/contexts"
-    subcommand "list", Askew::TaskListCommand
+    subcommand "list", AskewClient::TaskListCommand
 
     desc "nav TASK_#", "Navigate to link tags"
     def nav task_num

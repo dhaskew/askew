@@ -1,4 +1,4 @@
-module Askew
+module AskewClient
 
   class VersionCommand < CommandBase 
 

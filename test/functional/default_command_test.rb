@@ -6,19 +6,19 @@ class DefaultCommandTest < Minitest::Test
   # regardless of wether it is executed in whole or in part
   def test_default_command_is_task_list
     out, err = capture_io {
-      Askew::CLI.start %w{ }
+      AskewClient::CLI.start %w{ }
     }
 
     out2, err2 = capture_io {
-      Askew::CLI.start %w{ task }
+      AskewClient::CLI.start %w{ task }
     }
 
     out3, err3 = capture_io {
-      Askew::CLI.start %w{ task list }
+      AskewClient::CLI.start %w{ task list }
     }
 
     out4, err4 = capture_io {
-      Askew::CLI.start %w{ task list all }
+      AskewClient::CLI.start %w{ task list all }
     }
 
     refute_nil out

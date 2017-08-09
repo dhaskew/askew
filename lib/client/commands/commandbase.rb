@@ -16,7 +16,7 @@ class Thor
   end
 end
 
-module Askew
+module AskewClient
   class CommandBase < Thor
 
     def self.banner(command, namespace = nil, subcommand = false)

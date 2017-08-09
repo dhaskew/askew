@@ -4,31 +4,31 @@ class VersionCommandTest < Minitest::Test
 
   def test_cli_version_command
     out, err = capture_io {
-      Askew::CLI.start %w{ version }
+      AskewClient::CLI.start %w{ version }
     }
-    assert out == Askew::VersionCommand::VERSION + "\n"
+    assert out == AskewClient::VersionCommand::VERSION + "\n"
   end
 
   def test_cli_version_major_command
     out, err = capture_io {
-      Askew::CLI.start %w{ version major }
+      AskewClient::CLI.start %w{ version major }
     }
-    assert out == Askew::VersionCommand::VERSION_MAJOR + "\n"
+    assert out == AskewClient::VersionCommand::VERSION_MAJOR + "\n"
   end
   
 
   def test_cli_version_minor_command
     out, err = capture_io {
-      Askew::CLI.start %w{ version minor }
+      AskewClient::CLI.start %w{ version minor }
     }
-    assert out == Askew::VersionCommand::VERSION_MINOR + "\n"
+    assert out == AskewClient::VersionCommand::VERSION_MINOR + "\n"
   end
 
   def test_cli_version_patch_command
     out, err = capture_io {
-      Askew::CLI.start %w{ version patch }
+      AskewClient::CLI.start %w{ version patch }
     }
-    assert out == Askew::VersionCommand::VERSION_PATCH + "\n"
+    assert out == AskewClient::VersionCommand::VERSION_PATCH + "\n"
   end
 
 end

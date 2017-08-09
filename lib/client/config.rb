@@ -1,7 +1,7 @@
 
 require 'yaml'
 
-module Askew
+module AskewClient
 
   class Config
 

@@ -3,17 +3,17 @@ require 'pry'
 require 'thor'
 require 'os'
 
-module Askew
+module AskewClient
 
   class CLI < Thor
 
     class_option 'config', :banner => 'PATH_TO_FILE', :aliases => '-c', :type => :string, :default => nil
 
     desc "version" ,  "Display the application version"
-    subcommand "version", Askew::VersionCommand
+    subcommand "version", AskewClient::VersionCommand
 
     desc "task", "List all the tasks"
-    subcommand "task", Askew::TaskCommand
+    subcommand "task", AskewClient::TaskCommand
 
     default_task :task
 

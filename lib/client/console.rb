@@ -1,4 +1,4 @@
-module Askew
+module AskewClient
   class Console
     def self.show_task num
       list = ListManager.get_list
@@ -20,7 +20,7 @@ module Askew
 
     def self.print_tasklist task_list=nil
       return if task_list == nil
-      return if !task_list.instance_of? TaskList
+      return if !task_list.instance_of? Askew::TaskList
 
       max = task_list.keys.max.to_s.size
 

@@ -1,5 +1,5 @@
 
-module Askew
+module AskewClient
 
   class ::String
     # colorization
