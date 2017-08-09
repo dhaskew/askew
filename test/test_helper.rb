@@ -21,4 +21,3 @@ require "minitest/autorun"
 
 require_relative '../lib/askew.rb'
 require_relative '../lib/client.rb'
-require_relative '../lib/cli.rb'

@@ -3,6 +3,10 @@ require 'pry'
 require 'thor'
 require 'os'
 
+Dir[File.expand_path "./lib/client/cli/**/*.rb"].each do |f|
+  require_relative(f)
+end
+
 module AskewClient
 
   class CLI < Thor
