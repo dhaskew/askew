@@ -11,7 +11,7 @@ SimpleCov.start do
   add_group "client" do |src_file|
     File.dirname(src_file.filename).include? 'client'
   end
-  add_group "thor commands", "lib/client/commands"
+  add_group "thor commands", "lib/client/cli/commands"
 end
 
 require "minitest/reporters"
