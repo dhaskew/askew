@@ -6,18 +6,19 @@ class TaskTest < Minitest::Test
   end
 
   def test_tasks_can_be_created
-    line = "simple task text"
-    t1 = Askew::Task.new line
+    t1 = build(:task)
     assert_equal Askew::Task, t1.class
   end
 
-  def test_tasks_can_have_priorities
+  def test_tasks_have_a_string_representation
+    t1 = build(:task)
+    assert t1.to_s.include? t1.text
+  end
+
+  def test_tasks_can_be_created_with_priorities
     line = "(A) simple task with priority"
     t1 = Askew::Task.new line
     assert_equal "A", t1.priority
-    line = "simple task without priority"
-    t1 = Askew::Task.new line
-    assert_nil t1.priority
   end
 
   def test_tasks_have_a_raw_line_value
@@ -75,10 +76,6 @@ class TaskTest < Minitest::Test
     assert_includes t1.projects, "+bar"
   end
 
-  def test_tasks_can_be_completed
-    skip
-  end
-
   def test_completed_tasks_have_completion_dates
     skip
   end
@@ -113,11 +110,15 @@ class TaskTest < Minitest::Test
   end
 
   def test_tasks_can_have_due_dates
-    skip 
+    line = "test task due:#{Date.today-1}"
+    t1 = Askew::Task.new line
+    refute_nil t1.due_on
   end
 
   def test_tasks_can_be_overdue
-    skip
+    line = "test task due:#{Date.today-1}"
+    t1 = Askew::Task.new line
+    assert_equal true, t1.overdue?
   end
  
   def test_tasks_can_have_their_priority_increased
@@ -128,6 +129,13 @@ class TaskTest < Minitest::Test
     assert_equal "A", t1.priority
   end 
 
+  def test_tasks_can_have_their_nil_priority_increaded_to_default_value
+    line = "foobar"
+    t1 = Askew::Task.new line
+    t1.priority_inc!
+    assert_equal "A", t1.priority
+  end
+
   def test_tasks_can_have_their_priority_decreased
     line = "(B) simple task to do"
     t1 = Askew::Task.new line
@@ -135,5 +143,14 @@ class TaskTest < Minitest::Test
     t1.priority_dec!
     assert_equal "C", t1.priority
   end 
+
+  def test_tasks_can_be_updated
+    line = "simple task"
+    t1 = Askew::Task.new line
+    assert_equal t1.text, line
+    line = "updated simple task"
+    t1.text = line
+    assert_equal t1.text, line
+  end
 
 end
