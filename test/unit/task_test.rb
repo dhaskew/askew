@@ -6,25 +6,23 @@ class TaskTest < Minitest::Test
   end
 
   def test_tasks_can_be_created
-    t1 = build(:task)
-    assert_equal Askew::Task, t1.class
+    task = build(:simple_task, :random_text)
+    assert_equal Askew::Task, task.class
   end
 
   def test_tasks_have_a_string_representation
-    t1 = build(:task)
-    assert t1.to_s.include? t1.text
+    task = build(:simple_task, :random_text)
+    assert task.to_s.include? task.text
   end
 
   def test_tasks_can_be_created_with_priorities
-    line = "(A) simple task with priority"
-    t1 = Askew::Task.new line
-    assert_equal "A", t1.priority
+    t1 = build(:prioritized_task, :random_text, :random_priority)
+    refute_nil t1.priority
   end
 
   def test_tasks_have_a_raw_line_value
-    line ="(A) simple task with priority"
-    t1 = Askew::Task.new line
-    assert_equal line, t1.raw
+    task = build(:simple_task, :random_text)
+    refute_nil task.raw
   end
 
   def test_tasks_have_a_simple_text_value
