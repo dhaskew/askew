@@ -1,22 +1,29 @@
 FactoryGirl.define do
-
-    trait :random_text do
-      text "test task text"
-    end
-
     trait :random_priority do
       priority { ('A'..'Z').to_a.sample }
     end
 
-    trait :no_priority do
+    trait :created_today do
+      created_on { Askew::Task.today_date_string }
+    end
+
+    factory :task, class: Askew::Task do
+      created_on nil
       priority nil
-    end
+      skip_create
+      initialize_with {
+                        priority_string = ""
 
-    factory :simple_task, class: Askew::Task do
-      initialize_with { new(text) }
-    end
-
-    factory :prioritized_task, class: Askew::Task do #, parent: :task do
-      initialize_with { new("(#{priority}) #{text}") }
-    end
-end
+                        if !priority.nil?
+                          priority_string = "(" + priority + ")"
+                        end
+                        
+                        task_string = [ priority_string,
+                                        created_on, 
+                                        text, 
+                                      ].join(" ")
+                        
+                        new(task_string)
+                      }
+    end #end task factory
+end #end factory girl block

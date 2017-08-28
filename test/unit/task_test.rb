@@ -6,41 +6,43 @@ class TaskTest < Minitest::Test
   end
 
   def test_tasks_can_be_created
-    task = build(:simple_task, :random_text)
+    task = FactoryGirl.create :task, :text => "foobar"
     assert_equal Askew::Task, task.class
   end
 
   def test_tasks_have_a_string_representation
-    task = build(:simple_task, :random_text)
-    assert task.to_s.include? task.text
+    task = FactoryGirl.create :task, :text => "task string" 
+    assert_equal task.text, "task string"
   end
 
   def test_tasks_can_be_created_with_priorities
-    t1 = build(:prioritized_task, :random_text, :random_priority)
-    refute_nil t1.priority
+    task = FactoryGirl.create :task, :priority => "A" , :text => "task string"
+    refute_nil task.priority
+    assert_equal task.priority , "A"
   end
 
   def test_tasks_have_a_raw_line_value
-    task = build(:simple_task, :random_text)
+    task = FactoryGirl.create :task, :text => "text string"
     refute_nil task.raw
+    assert task.to_s.include? "text string"
   end
 
   def test_tasks_have_a_simple_text_value
-    priority = "(A)"
     task_text = "simple task with priority"
-    line = "#{priority} #{task_text}"
-    t1 = Askew::Task.new line
-    assert_equal task_text, t1.text
+    task = FactoryGirl.create :task, :text => task_text 
+    assert_equal task_text, task.text
   end
 
   def test_tasks_get_a_created_on_date_if_they_dont_have_one
-    line = "simple task"
-    t1 = Askew::Task.new line
-    refute_nil t1.created_on
+    task = FactoryGirl.create :task, :text => "simple task string" 
+    refute_nil task.created_on
+    assert_equal Askew::Task.today_date_string, task.created_on
   end
 
   def test_existing_tasks_can_have_a_created_on_date
-    skip
+    task = FactoryGirl.create :task, :created_today, :text => "task string"
+    refute_nil task.created_on
+    assert_equal Askew::Task.today_date_string, task.created_on
   end
 
   def test_tasks_can_have_tags

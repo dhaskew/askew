@@ -26,11 +26,11 @@ require_relative '../lib/client.rb'
 # FactoryGirl Setup - Start
 require "factory_girl"
 
-class Minitest::Test
+#class Minitest::Test
   # this lets us write build(:factory_name) in our test classes
   # instead of FactoryGirl.build(:factory_name)
-  include FactoryGirl::Syntax::Methods
-end
+#  include FactoryGirl::Syntax::Methods
+#end
 
 FactoryGirl.find_definitions #find factories in test/factories/
 # FactoryGirl Setup - End
