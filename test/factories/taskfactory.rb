@@ -10,6 +10,7 @@ FactoryGirl.define do
     factory :task, class: Askew::Task do
       created_on nil
       priority nil
+      text nil
       skip_create
       initialize_with {
                         priority_string = ""

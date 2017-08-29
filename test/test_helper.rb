@@ -32,5 +32,10 @@ require "factory_girl"
 #  include FactoryGirl::Syntax::Methods
 #end
 
-FactoryGirl.find_definitions #find factories in test/factories/
+#find factories in test/factories/
+FactoryGirl.find_definitions if FactoryGirl.factories.count == 0
+
+#ensure all factories are valid before running test suite
+FactoryGirl.lint
+
 # FactoryGirl Setup - End
