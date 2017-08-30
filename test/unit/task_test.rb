@@ -12,7 +12,8 @@ class TaskTest < Minitest::Test
 
   def test_tasks_have_a_string_representation
     task = FactoryGirl.create :task, :text => "task string"
-    assert_equal task.text, "task string"
+    refute_nil task.to_s
+    assert task.to_s.include? "task string"
   end
 
   def test_tasks_can_be_created_with_priorities
@@ -24,7 +25,7 @@ class TaskTest < Minitest::Test
   def test_tasks_have_a_raw_line_value
     task = FactoryGirl.create :task, :text => "text string"
     refute_nil task.raw
-    assert task.to_s.include? "text string"
+    assert task.raw.include? "text string"
   end
 
   def test_tasks_have_a_simple_text_value
