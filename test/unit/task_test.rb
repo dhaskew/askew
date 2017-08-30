@@ -81,32 +81,31 @@ class TaskTest < Minitest::Test
   end
 
   def test_tasks_can_be_done
-    line = "simple task to do"
-    t1 = Askew::Task.new line
-    assert !t1.done?
-    t1.do!
-    assert t1.done?
+    task = FactoryGirl.create :task, :text => "simple task to do"
+    assert !task.done?
+    task.do!
+    assert task.done?
+    #should we be testing for the "completion marker "X""?
   end
 
   def test_tasks_can_be_undone
-    line = "simple task to do"
-    t1 = Askew::Task.new line
-    assert !t1.done?
-    t1.do!
-    assert t1.done?
-    t1.undo!
-    assert !t1.done?
+    task = FactoryGirl.create :task, :text => "simple task to do"
+    assert !task.done?
+    task.do!
+    assert task.done?
+    task.undo!
+    assert !task.done?
     #how should priorities be handled?
+    #should we be testing for the "completion marker "X""?
   end
 
   def test_tasks_done_status_can_be_toggled
-    line = "simple task to do"
-    t1 = Askew::Task.new line
-    assert !t1.done?
-    t1.toggle!
-    assert t1.done?
-    t1.toggle!
-    assert !t1.done?
+    task = FactoryGirl.create :task, :text => "simple task to do"
+    assert !task.done?
+    task.toggle!
+    assert task.done?
+    task.toggle!
+    assert !task.done?
   end
 
   def test_tasks_can_have_due_dates
