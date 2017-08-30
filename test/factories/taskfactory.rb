@@ -11,6 +11,9 @@ FactoryGirl.define do
       created_on nil
       priority nil
       text nil
+      contexts [ ]
+      projects [ ]
+      tags [ ]
       skip_create
       initialize_with {
                         priority_string = ""
@@ -21,7 +24,10 @@ FactoryGirl.define do
                         
                         task_string = [ priority_string,
                                         created_on, 
-                                        text, 
+                                        text,
+                                        contexts.join(" "),
+                                        projects.join(" "),
+                                        tags.join(" "),
                                       ].join(" ")
                         
                         new(task_string)
