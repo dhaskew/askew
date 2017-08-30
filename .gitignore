@@ -1,4 +1,4 @@
-
+*.swp
 #simplecov coverage data
 coverage
 .yardoc
