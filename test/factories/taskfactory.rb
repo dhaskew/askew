@@ -8,6 +8,11 @@ FactoryGirl.define do
     end
 
     factory :task, class: Askew::Task do
+      transient do
+        completion_marker false
+        completed_on nil
+        require_completed_on { Askew::Options.new.require_completed_on }
+      end
       created_on nil
       priority nil
       text nil
@@ -16,21 +21,25 @@ FactoryGirl.define do
       tags [ ]
       skip_create
       initialize_with {
-                        priority_string = ""
+                        priority_string = priority.nil? ? "" : "(#{priority})"
 
-                        if !priority.nil?
-                          priority_string = "(" + priority + ")"
-                        end
-                        
-                        task_string = [ priority_string,
-                                        created_on, 
+                        marker = completion_marker ? Askew::PatternHelpers::COMPLETED_FLAG : ""
+
+                        task_string = [ marker,
+                                        priority_string,
+                                        completed_on,
+                                        created_on,
                                         text,
                                         contexts.join(" "),
                                         projects.join(" "),
                                         tags.join(" "),
                                       ].join(" ")
-                        
-                        new(task_string)
+
+                        options = Askew::Options.new
+
+                        options.require_completed_on = require_completed_on
+
+                        new(task_string, options)
                       }
     end #end task factory
 end #end factory girl block

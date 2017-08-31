@@ -118,8 +118,49 @@ class TaskTest < Minitest::Test
     assert task.priority == "A"
   end
 
-  def test_tasks_already_completed_may_have_a_completed_date_or_completed_flag
+  def test_tasks_already_completed_may_have_a_completed_date_or_not
+    #Options.require_completed_on = true
+
+    task = FactoryGirl.create :task,
+                              :created_today,
+                              :require_completed_on => true,
+                              :completion_marker => true,
+                              :completed_on => Askew::Task.today_date_string,
+                              :text => "simple task"
+    assert task.done?
+    assert_equal task.completed_on.to_s, Askew::Task.today_date_string
+
+    #Options.require_completed_on = false
+    task = FactoryGirl.create :task,
+                              :created_today,
+                              :require_completed_on => false,
+                              :completion_marker => true,
+                              :text => "simple task"
+    assert task.done?
+    assert_equal task.completed_on.to_s, Askew::Task.today_date_string
+  end
+
+  def test_tasks_with_completed_marker_and_no_complete_date
     skip
+
+    # the test below should pass, but doesn't.
+    # completion date is being picked up from creation date by mistake
+    # how should a single date be parsed, if the completion marker is present?
+    # - is it the completion date
+    # - or is it the create date
+    # - should that answer depened on the require_completed_on preference?
+    # - should that even be a preference at this point?
+    # - are these type scenarios better handled by tests on PatternHelpers module
+
+    # without date
+    task = FactoryGirl.create :task,
+                              :created_today,
+                              :require_completed_on => true,
+                              :completion_marker => true,
+                              :text => "simple task"
+    refute task.done?
+    assert_equal task.completed_on.to_s, Askew::Task.today_date_string
+
   end
 
   def test_tasks_can_be_compared
