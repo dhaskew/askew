@@ -75,7 +75,21 @@ class TaskTest < Minitest::Test
   end
 
   def test_completed_tasks_have_completion_dates
-    skip
+    task = FactoryGirl.create :task, :text => "simple task text"
+    refute task.done?
+    task.do!
+    assert task.done?
+    refute_nil task.completed_on
+    assert task.to_s[0] == Askew::PatternHelpers::COMPLETED_FLAG
+  end
+
+  def test_completed_tasks_have_completion_markers
+    task = FactoryGirl.create :task, :text => "simple task text"
+    refute task.done?
+    task.do!
+    assert task.done?
+    refute_nil task.completed_on
+    assert task.to_s[0] == Askew::PatternHelpers::COMPLETED_FLAG
   end
 
   def test_tasks_can_be_done
@@ -83,7 +97,6 @@ class TaskTest < Minitest::Test
     assert !task.done?
     task.do!
     assert task.done?
-    #should we be testing for the "completion marker "X""?
   end
 
   def test_tasks_can_be_undone
@@ -93,17 +106,45 @@ class TaskTest < Minitest::Test
     assert task.done?
     task.undo!
     assert !task.done?
-    #how should priorities be handled?
-    #should we be testing for the "completion marker "X""?
+  end
+
+  def test_tasks_undone_have_priority_restored
+    task = FactoryGirl.create :task, :text => "simple task", :priority => "A"
+    assert task.priority == "A"
+    task.do!
+    assert task.done?
+    task.undo!
+    refute task.done?
+    assert task.priority == "A"
+  end
+
+  def test_tasks_already_completed_may_have_a_completed_date_or_completed_flag
+    skip
+  end
+
+  def test_tasks_can_be_compared
+    high_pri = FactoryGirl.create :task, :text => "simple task", :priority => "A"
+    low_pri = FactoryGirl.create :task, :text => "simple task", :priority => "Z"
+    no_pri = FactoryGirl.create :task, :text => "simple task"
+    no_pri2 = FactoryGirl.create :task, :text => "simple task"
+    assert high_pri > low_pri
+    assert low_pri > no_pri
+    assert_equal no_pri, no_pri2
   end
 
   def test_tasks_done_status_can_be_toggled
     task = FactoryGirl.create :task, :text => "simple task to do"
     refute task.done?
+    refute task.to_s[0] == Askew::PatternHelpers::COMPLETED_FLAG
+    assert_nil task.completed_on
     task.toggle!
     assert task.done?
+    assert task.to_s[0] == Askew::PatternHelpers::COMPLETED_FLAG
+    refute_nil task.completed_on
     task.toggle!
     refute task.done?
+    refute task.to_s[0] == Askew::PatternHelpers::COMPLETED_FLAG
+    assert_nil task.completed_on
   end
 
   def test_tasks_can_have_due_dates

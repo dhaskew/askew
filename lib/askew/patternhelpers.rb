@@ -1,6 +1,7 @@
 module Askew
   # Supports parsing and extracting core syntax fragments from todo.txt lines.
   module PatternHelpers
+
     # The regex used to match contexts.
     CONTEXTS_PATTERN = /(?:\s+|^)@[^\s]+/
 
