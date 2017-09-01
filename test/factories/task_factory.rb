@@ -33,7 +33,7 @@ FactoryGirl.define do
                                         contexts.join(" "),
                                         projects.join(" "),
                                         tags.join(" "),
-                                      ].join(" ")
+                                      ].reject { |i| !i || i.nil? || i.empty? }.join(' ')
 
                         options = Askew::Options.new
 

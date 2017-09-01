@@ -43,7 +43,7 @@ class TaskTest < Minitest::Test
   def test_existing_tasks_can_have_a_created_on_date
     task = FactoryGirl.create :task, :created_today, :text => "task string"
     refute_nil task.created_on
-    assert_equal Askew::Task.today_date_string, task.created_on
+    assert_equal Askew::Task.today_date_string, task.created_on.to_s
   end
 
   def test_tasks_can_have_tags
