@@ -1,8 +1,11 @@
 require_relative "../test_helper.rb"
+require_relative "../interfaces.rb"
 
 class TaskTest < Minitest::Test
+  include Interface::Task
 
   def setup
+    @task = FactoryGirl.create :task, :text => "simple task"
   end
 
   def test_tasks_can_be_created
