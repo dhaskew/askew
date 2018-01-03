@@ -8,6 +8,7 @@ gem 'os'
 gem 'pry'
 gem 'pry-doc'
 gem 'pry-byebug'
+gem 'yard', "~>0.9.11"
 
 #testing dependencies
 gem 'minitest-reporters'

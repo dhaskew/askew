@@ -45,7 +45,7 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    yard (0.9.9)
+    yard (0.9.12)
 
 PLATFORMS
   ruby
@@ -59,6 +59,7 @@ DEPENDENCIES
   pry-doc
   simplecov
   thor
+  yard (~> 0.9.11)
 
 BUNDLED WITH
    1.15.1
