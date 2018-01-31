@@ -15,6 +15,8 @@ module Askew
     end
 
     def initialize(line, options=Askew::Options.new)
+      raise ArgumentError if line==nil
+      raise ArgumentError if line.strip.empty?
       @raw = line
       @priority = extract_priority(raw)
 

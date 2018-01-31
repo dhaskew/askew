@@ -8,6 +8,23 @@ class TaskTest < Minitest::Test
     @task = FactoryGirl.create :task, :text => "simple task"
   end
 
+  def test_tasks_cannot_be_created_from_a_nil_string
+    assert_raises ArgumentError do
+      task = Askew::Task.new(nil)
+    end
+  end
+
+  def test_tasks_cannot_be_created_from_an_empty_string
+    #empty string
+    assert_raises ArgumentError do
+      task = Askew::Task.new("")
+    end
+    #string of all whitespace
+    assert_raises ArgumentError do
+      task = Askew::Task.new("       ")
+    end
+  end
+
   def test_tasks_can_be_created
     task = FactoryGirl.create :task, :text => "foobar"
     assert_equal Askew::Task, task.class

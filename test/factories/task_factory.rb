@@ -15,7 +15,7 @@ FactoryGirl.define do
       end
       created_on nil
       priority nil
-      text nil
+      text "default text from factory"
       contexts [ ]
       projects [ ]
       tags [ ]

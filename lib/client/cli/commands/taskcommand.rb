@@ -136,10 +136,14 @@ module AskewClient
 
     desc "add TASK_INFO", "Add a task"
     def add *task_text
-      new_task = Askew::Task.new task_text.join ' '
-      list = ListManager.get_list
-      list[list.count + 1] = new_task
-      list.save!
+      if task_text.join(' ').strip.empty?
+        puts "Must specify task text. Cannot be empty string!"
+      else
+        new_task = Askew::Task.new task_text.join ' '
+        list = ListManager.get_list
+        list[list.count + 1] = new_task
+        list.save!
+      end
     end
 
     map rm: :remove
